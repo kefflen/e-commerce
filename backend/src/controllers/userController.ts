@@ -3,15 +3,9 @@ import { User } from '../infra/mongo/models/User'
 import bcryptjs from 'bcryptjs'
 
 export const createUser = async (req: Request, res: Response) => {
-  const {
-    email,
-    password,
-    firstName,
-    mobile,
-    lastName
-  } = req.body
+  const { email, password, firstName, mobile, lastName } = req.body
 
-  if (!email ||!password ||!firstName ||!lastName ||!mobile) {
+  if (!email || !password || !firstName || !lastName || !mobile) {
     return res.status(400).json({})
   }
 
@@ -22,7 +16,7 @@ export const createUser = async (req: Request, res: Response) => {
     password: hashedPassword,
     firstName,
     lastName,
-    mobile
+    mobile,
   })
   return res.status(201).json(user)
 }
