@@ -1,8 +1,15 @@
 import dotenv from 'dotenv'
+import { dbConnect } from './config/dbConnect'
 dotenv.config()
 import server from './config/server'
 
 const PORT = process.env.PORT || 8080
-server.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`)
-})
+dbConnect()
+  .then(() => {
+    server.listen(PORT, () => {
+      console.log(`Server is running on http://localhost:${PORT}`)
+    })
+  })
+  .catch((_) => {
+    console.log('DB connection failed')
+  })
