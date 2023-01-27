@@ -22,6 +22,7 @@ export class UpdateUserService extends UserService {
     if (!updatedUser) {
       throw AppError.notFound('User not found')
     }
+    
     return updatedUser
   }
 }
