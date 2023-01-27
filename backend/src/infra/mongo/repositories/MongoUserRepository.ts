@@ -4,7 +4,10 @@ import { UserModel } from '../models/UserModel'
 
 export class MongoUserRepository implements IUserRepository {
   async updateUser(user: User): Promise<User | null> {
-    throw new Error('Method not implemented.')
+    const updatedUser = await UserModel.findOneAndUpdate(user.toJSON())
+    if (!updatedUser) return null
+
+    return new User(updatedUser.toJSON())
   }
 
   async createUser(user: User): Promise<User | null> {
@@ -13,7 +16,7 @@ export class MongoUserRepository implements IUserRepository {
 
     return new User(savedUser.toJSON())
   }
-  
+
   async getAllUsers(): Promise<User[]> {
     throw new Error('Method not implemented.')
   }
