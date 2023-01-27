@@ -13,4 +13,8 @@ export class AppError extends Error {
   static serverError(message: string) {
     return new this(message, 500)
   }
+
+  static notFound(message: string) {
+    return new this(message, 404)
+  }
 }

@@ -56,4 +56,15 @@ export class User {
       mobile: this.mobile
     }
   }
+
+  update(userDTO: Partial<userDTO>): User {
+    return new User({
+      _id: this._id,
+      firstName: userDTO.firstName || this.firstName,
+      email: userDTO.email || this.email,
+      password: userDTO.password || this.password,
+      lastName: userDTO.lastName || this.lastName,
+      mobile: userDTO.mobile || this.mobile
+    })
+  }
 }
