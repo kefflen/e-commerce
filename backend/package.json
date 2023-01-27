@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "tsnd src/index.ts",
-    "format": "prettier --write src/**/*.{ts,js}"
+    "format": "prettier --write src/**/*.{ts,js}",
+    "lint:fix": "eslint src/**/*.{ts,js} --fix",
+    "lint": "eslint src/**/*.{ts,js}"
   },
   "keywords": [],
   "author": "",
