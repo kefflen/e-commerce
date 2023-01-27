@@ -2,7 +2,7 @@ import bcryptjs from 'bcryptjs'
 import crypto from 'node:crypto'
 import { createUserDTO, User } from '../../entities/User'
 import { AppError } from '../../errors/AppError'
-import { UserService } from '../_contracts/UserService'
+import { UserService } from '../_contracts/UserService';
 
 export class CreateUserService extends UserService {
   async execute({password, confirmPassword,...rest}: createUserDTO): Promise<User> {
