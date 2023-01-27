@@ -1,6 +1,6 @@
 import dotenv from 'dotenv'
-import { dbConnect } from './config/dbConnect'
 dotenv.config()
+import { dbConnect } from './config/dbConnect'
 import server from './config/server'
 
 const PORT = process.env.PORT || 8080
