@@ -10,6 +10,6 @@ dbConnect()
       console.log(`Server is running on http://localhost:${PORT}`)
     })
   })
-  .catch((_) => {
+  .catch(() => {
     console.log('DB connection failed')
   })
