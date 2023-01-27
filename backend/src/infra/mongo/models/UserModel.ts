@@ -1,6 +1,10 @@
 import { model, Schema } from 'mongoose'
 
 const UserSchema = new Schema({
+  _id: {
+    type: String,
+    required: true,
+  },
   firstName: {
     type: String,
     required: true,
@@ -24,4 +28,4 @@ const UserSchema = new Schema({
   },
 })
 
-export const User = model('User', UserSchema)
+export const UserModel = model('User', UserSchema)
