@@ -3,6 +3,14 @@ import { IUserRepository } from '../../../domain/repositories'
 import { UserModel } from '../models/UserModel'
 
 export class MongoUserRepository implements IUserRepository {
+
+  async getUserByEmail(email: string): Promise<User | null> {
+    const user = await UserModel.findOne({ email: email })
+    if (!user) return null
+
+    return new User(user.toJSON())
+  }
+
   async updateUser(user: User): Promise<User | null> {
     const updatedUser = await UserModel.findOneAndUpdate(user.toJSON())
     if (!updatedUser) return null

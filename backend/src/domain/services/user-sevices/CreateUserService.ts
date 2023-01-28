@@ -9,7 +9,9 @@ export class CreateUserService extends UserService {
     if (password!== confirmPassword) {
       throw AppError.badRequest('Passwords do not match')
     }
-
+    const existUserWithEmail = !!(await this.userRepository.getUserByEmail(rest.email))
+    if (existUserWithEmail) throw AppError.conflict('Email already exists')
+    
     const id = crypto.randomUUID()
     const hashedPassword = await bcryptjs.hash(password, 10)
     const user = new User({
