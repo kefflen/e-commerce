@@ -2,7 +2,7 @@
 export class AppError {
   readonly statusCode: number
   readonly message: string
-  
+
   constructor(message: string, statusCode=500) {
     this.statusCode = statusCode
     this.message = message
@@ -18,5 +18,9 @@ export class AppError {
 
   static notFound(message: string) {
     return new this(message, 404)
+  }
+
+  static conflict(message: string) {
+    return new this(message, 409)
   }
 }
