@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import { AppError } from '../domain/errors/AppError'
 import { CreateUserService } from '../domain/services/user-sevices'
 import { UpdateUserService } from '../domain/services/user-sevices/UpdateUserService'
 import { MongoUserRepository } from '../infra/mongo/repositories/MongoUserRepository'
@@ -26,6 +27,6 @@ export const updatedUser = async (req: Request, res: Response) => {
   const { userId } = req.params
   const { email, firstName, mobile, lastName } = req.body
   const updatedUser = updatedUserService.execute({ _id: userId, email, firstName, mobile, lastName })
-  
+
   return res.status(200).json(updatedUser)
 }

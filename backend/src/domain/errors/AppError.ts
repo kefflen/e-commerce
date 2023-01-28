@@ -1,9 +1,11 @@
 
-export class AppError extends Error {
+export class AppError {
   readonly statusCode: number
+  readonly message: string
+  
   constructor(message: string, statusCode=500) {
-    super(message)
     this.statusCode = statusCode
+    this.message = message
   }
 
   static badRequest(message: string) {
