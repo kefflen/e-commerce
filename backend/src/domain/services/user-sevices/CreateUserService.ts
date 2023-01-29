@@ -1,5 +1,5 @@
 import crypto from 'node:crypto'
-import { createUserDTO, User } from '../../entities/User'
+import { createUserDTO, normalizedUserDTO, User } from '../../entities/User'
 import { AppError } from '../../errors/AppError'
 import { UserService } from '../_contracts/UserService'
 
@@ -8,7 +8,7 @@ export class CreateUserService extends UserService {
     password,
     confirmPassword,
     ...rest
-  }: createUserDTO): Promise<User> {
+  }: createUserDTO): Promise<normalizedUserDTO> {
     if (password !== confirmPassword) {
       throw AppError.badRequest('Passwords do not match')
     }
@@ -28,6 +28,6 @@ export class CreateUserService extends UserService {
 
     await this.userRepository.createUser(user)
 
-    return user
+    return user.toNormalizedJSON()
   }
 }
