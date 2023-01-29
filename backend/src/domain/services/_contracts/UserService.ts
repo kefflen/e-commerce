@@ -1,5 +1,4 @@
-import { IPasswordHandler } from '../../ports/IPasswordHandler'
-import { ISessionManager } from '../../ports/ISessionManager'
+import { IPasswordHandler, ISessionManager } from '../../ports'
 import { IUserRepository } from '../../repositories/IUserRepository'
 
 type depedencies = {

@@ -2,8 +2,7 @@ import { Request, Response } from 'express'
 import { CreateUserService } from '../domain/services/user-sevices'
 import { UpdateUserService } from '../domain/services/user-sevices/UpdateUserService'
 import { MongoUserRepository } from '../infra/mongo/repositories/MongoUserRepository'
-import { PasswordHandler } from '../infra/utils/PasswordHandler'
-import { SessionManager } from '../infra/utils/SessionManager'
+import { PasswordHandler, SessionManager } from '../infra/utils'
 
 const userDepedencies = {
   userRepository: new MongoUserRepository(),

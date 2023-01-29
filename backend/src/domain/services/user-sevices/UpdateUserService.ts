@@ -1,6 +1,6 @@
 import { User, userDTO } from '../../entities/User'
 import { AppError } from '../../errors/AppError'
-import { UserService } from '../_contracts/UserService'
+import { UserService } from '../_contracts'
 
 export class UpdateUserService extends UserService {
   async execute(user: Omit<userDTO, 'password'>): Promise<User> {

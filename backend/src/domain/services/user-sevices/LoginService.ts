@@ -1,13 +1,16 @@
 import { loggedInUserDTO } from '../../entities/User'
 import { AppError } from '../../errors/AppError'
-import { UserService } from '../_contracts/UserService'
+import { UserService } from '../_contracts'
 
 export class LoginService extends UserService {
   async execute(email: string, password: string): Promise<loggedInUserDTO> {
     const user = await this.userRepository.getUserByEmail(email)
     if (!user) throw AppError.notFound('User not found')
 
-    const isValidPassword = this.passwordHandler.validate(password, user.password)
+    const isValidPassword = this.passwordHandler.validate(
+      password,
+      user.password,
+    )
     if (!isValidPassword) throw AppError.badRequest('Invalid password or email')
 
     const token = await this.sessionManager.createSession({

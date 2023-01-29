@@ -1,7 +1,7 @@
 import crypto from 'node:crypto'
 import { createUserDTO, normalizedUserDTO, User } from '../../entities/User'
 import { AppError } from '../../errors/AppError'
-import { UserService } from '../_contracts/UserService'
+import { UserService } from '../_contracts'
 
 export class CreateUserService extends UserService {
   async execute({
