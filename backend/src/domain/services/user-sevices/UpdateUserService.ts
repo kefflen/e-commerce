@@ -1,9 +1,9 @@
-import { User, userDTO } from '../../entities/User'
+import { normalizedUserDTO, User, userDTO } from '../../entities/User'
 import { AppError } from '../../errors/AppError'
 import { UserService } from '../_contracts'
 
 export class UpdateUserService extends UserService {
-  async execute(user: Omit<userDTO, 'password'>): Promise<User> {
+  async execute(user: Omit<userDTO, 'password'>): Promise<normalizedUserDTO> {
     const persistedUser = await this.userRepository.getUserById(user._id)
 
     if (!persistedUser) {
@@ -25,6 +25,6 @@ export class UpdateUserService extends UserService {
       throw AppError.notFound('User not found')
     }
 
-    return updatedUser
+    return updatedUser.toNormalizedJSON()
   }
 }
