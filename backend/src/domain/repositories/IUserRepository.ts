@@ -5,6 +5,6 @@ export interface IUserRepository {
   updateUser(user: User): Promise<User | null>
   createUser(user: User): Promise<User | null>
   getAllUsers(): Promise<Array<User>>
-  deleteUser(id: string): Promise<null>
+  deleteUser(id: string): Promise<void>
   getUserByEmail(email: string): Promise<User | null>
 }

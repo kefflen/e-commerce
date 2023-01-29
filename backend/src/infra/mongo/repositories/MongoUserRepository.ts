@@ -25,11 +25,13 @@ export class MongoUserRepository implements IUserRepository {
   }
 
   async getAllUsers(): Promise<User[]> {
-    throw new Error('Method not implemented.')
+    const usersData = await UserModel.find()
+
+    return usersData.map(user => new User(user.toJSON()))
   }
 
-  async deleteUser(id: string): Promise<null> {
-    throw new Error('Method not implemented.')
+  async deleteUser(id: string): Promise<void> {
+    await UserModel.deleteOne({ _id: id })
   }
 
   async getUserById(id: string): Promise<User | null> {
