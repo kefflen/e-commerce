@@ -6,7 +6,10 @@ import {
 
 export class SessionManager implements ISessionManager {
   createSession(payload: userPayload): string {
-    return jwt.sign(payload, process.env.JWT_SECRET||'', {
+    const SECRET_KEY = process.env.JWT_SECRET_KEY
+    if (!SECRET_KEY) throw new Error('Missing SECRET_KEY')
+
+    return jwt.sign(payload, SECRET_KEY, {
       expiresIn: '1d',
     })
   }
