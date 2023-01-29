@@ -35,10 +35,9 @@ export const createUser = async (req: Request, res: Response) => {
 
 export const updatedUser = async (req: Request, res: Response) => {
   const { userId } = req.params
-  const { email, firstName, mobile, lastName } = req.body
+  const { firstName, mobile, lastName } = req.body
   const updatedUser = updatedUserService.execute({
     _id: userId,
-    email,
     firstName,
     mobile,
     lastName,

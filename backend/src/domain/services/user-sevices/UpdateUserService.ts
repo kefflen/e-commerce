@@ -13,6 +13,7 @@ export class UpdateUserService extends UserService {
       | 'updatedAt'
       | 'isBlocked'
       | 'role'
+      | 'email'
     >,
   ): Promise<normalizedUserDTO> {
     const persistedUser = await this.userRepository.getUserById(user._id)
@@ -25,7 +26,6 @@ export class UpdateUserService extends UserService {
       persistedUser.update({
         firstName: user.firstName,
         lastName: user.lastName,
-        email: user.email,
         mobile: user.mobile,
         // password: user.password
         // _id: user._id

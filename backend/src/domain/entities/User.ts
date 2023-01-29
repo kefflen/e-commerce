@@ -109,6 +109,7 @@ export class User {
   }
 
   toNormalizedJSON(): normalizedUserDTO {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...normalizedUserDTO } = this.toJSON()
 
     return normalizedUserDTO
