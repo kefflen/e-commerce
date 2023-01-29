@@ -7,9 +7,17 @@ export type userDTO = {
   mobile: string
 }
 
+export type normalizedUserDTO = Omit<userDTO, 'password'>
+
 export type createUserDTO = Omit<userDTO, '_id'> & {
   confirmPassword: string
 }
+
+export type loggedInUserDTO = {
+  token: string
+  user: normalizedUserDTO
+}
+
 
 export class User {
   private readonly _id: string
@@ -55,6 +63,11 @@ export class User {
       lastName: this.lastName,
       mobile: this.mobile
     }
+  }
+
+  toNormalizedJSON(): normalizedUserDTO {
+    const { password, ...normalizedUserDTO} = this.toJSON()
+    return normalizedUserDTO
   }
 
   update(userDTO: Partial<userDTO>): User {

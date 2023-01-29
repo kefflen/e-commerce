@@ -3,9 +3,11 @@ import { AppError } from '../domain/errors/AppError'
 import { CreateUserService } from '../domain/services/user-sevices'
 import { UpdateUserService } from '../domain/services/user-sevices/UpdateUserService'
 import { MongoUserRepository } from '../infra/mongo/repositories/MongoUserRepository'
+import { SessionManager } from '../infra/utils/SessionManager'
 
 const userDepedencies = {
   userRepository: new MongoUserRepository(),
+  sessionManager: new SessionManager(),
 }
 
 const createUserService = new CreateUserService(userDepedencies)
