@@ -1,5 +1,10 @@
 import crypto from 'node:crypto'
-import { createUserDTO, normalizedUserDTO, User } from '../../entities/User'
+import {
+  createUserDTO,
+  normalizedUserDTO,
+  ROLES,
+  User,
+} from '../../entities/User'
 import { AppError } from '../../errors/AppError'
 import { UserService } from '../_contracts'
 
@@ -23,6 +28,12 @@ export class CreateUserService extends UserService {
     const user = new User({
       _id: id,
       password: hashedPassword,
+      role: ROLES.USER,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      isBlocked: false,
+      cart: [],
+      wishlist: [],
       ...rest,
     })
 

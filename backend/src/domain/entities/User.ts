@@ -1,3 +1,8 @@
+export enum ROLES {
+  USER = 'USER',
+  ADMIN = 'ADMIN',
+}
+
 export type userDTO = {
   _id: string
   firstName: string
@@ -5,11 +10,20 @@ export type userDTO = {
   password: string
   lastName: string
   mobile: string
+  role: ROLES
+  isBlocked: boolean
+  cart: string[]
+  wishlist: string[]
+  createdAt: Date
+  updatedAt: Date
 }
 
 export type normalizedUserDTO = Omit<userDTO, 'password'>
 
-export type createUserDTO = Omit<userDTO, '_id'> & {
+export type createUserDTO = Omit<
+  userDTO,
+  '_id' | 'cart' | 'wishlist' | 'role' | 'createdAt' | 'updatedAt' | 'isBlocked'
+> & {
   confirmPassword: string
 }
 
@@ -25,6 +39,12 @@ export class User {
   private readonly _password: string
   private readonly _lastName: string
   private readonly _mobile: string
+  private readonly _role: ROLES
+  private readonly _isBlocked: boolean
+  private readonly _cart: string[]
+  private readonly _wishlist: string[]
+  private readonly createdAt: Date
+  private readonly updatedAt: Date
 
   constructor(userDTO: userDTO) {
     this._id = userDTO._id
@@ -33,6 +53,12 @@ export class User {
     this._password = userDTO.password
     this._lastName = userDTO.lastName
     this._mobile = userDTO.mobile
+    this._role = userDTO.role
+    this._isBlocked = false
+    this._cart = userDTO.cart
+    this._wishlist = userDTO.wishlist
+    this.createdAt = new Date()
+    this.updatedAt = new Date()
   }
   get id(): string {
     return this._id
@@ -52,6 +78,18 @@ export class User {
   get mobile(): string {
     return this._mobile
   }
+  get role(): ROLES {
+    return this._role
+  }
+  get isBlocked(): boolean {
+    return this._isBlocked
+  }
+  get cart(): string[] {
+    return this._cart
+  }
+  get wishlist(): string[] {
+    return this._wishlist
+  }
 
   toJSON(): userDTO {
     return {
@@ -61,6 +99,12 @@ export class User {
       password: this.password,
       lastName: this.lastName,
       mobile: this.mobile,
+      role: this.role,
+      isBlocked: this.isBlocked,
+      cart: [...this.cart],
+      wishlist: [...this.wishlist],
+      createdAt: new Date(this.createdAt),
+      updatedAt: new Date(this.updatedAt),
     }
   }
 
@@ -78,6 +122,12 @@ export class User {
       password: userDTO.password || this.password,
       lastName: userDTO.lastName || this.lastName,
       mobile: userDTO.mobile || this.mobile,
+      role: userDTO.role || this.role,
+      isBlocked: userDTO.isBlocked || this.isBlocked,
+      cart: userDTO.cart || this.cart,
+      wishlist: userDTO.wishlist || this.wishlist,
+      createdAt: userDTO.createdAt || this.createdAt,
+      updatedAt: userDTO.updatedAt || this.updatedAt,
     })
   }
 }

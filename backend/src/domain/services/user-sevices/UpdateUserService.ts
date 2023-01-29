@@ -3,7 +3,18 @@ import { AppError } from '../../errors/AppError'
 import { UserService } from '../_contracts'
 
 export class UpdateUserService extends UserService {
-  async execute(user: Omit<userDTO, 'password'>): Promise<normalizedUserDTO> {
+  async execute(
+    user: Omit<
+      userDTO,
+      | 'password'
+      | 'wishlist'
+      | 'cart'
+      | 'createdAt'
+      | 'updatedAt'
+      | 'isBlocked'
+      | 'role'
+    >,
+  ): Promise<normalizedUserDTO> {
     const persistedUser = await this.userRepository.getUserById(user._id)
 
     if (!persistedUser) {
