@@ -1,4 +1,4 @@
-import { normalizedUserDTO, User, userDTO } from '../../entities/User'
+import { normalizedUserDTO, userDTO } from '../../entities/User'
 import { AppError } from '../../errors/AppError'
 import { UserService } from '../_contracts'
 
