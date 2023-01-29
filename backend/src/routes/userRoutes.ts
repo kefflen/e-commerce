@@ -4,6 +4,6 @@ import { createUser, updatedUser } from '../controllers/userController'
 const userRoutes = Router()
 
 userRoutes.post('/login', createUser)
-userRoutes.post('/', updatedUser)
+userRoutes.post('/:userId', updatedUser)
 
 export default userRoutes
