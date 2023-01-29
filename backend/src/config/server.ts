@@ -10,18 +10,25 @@ server.use(cors())
 server.use(express.json())
 server.use(routes)
 
-server.use((error: Error, request: Request, response: Response, nextFunction: NextFunction) => {
-  console.log(error)
+server.use(
+  (
+    error: Error,
+    request: Request,
+    response: Response,
+    nextFunction: NextFunction,
+  ) => {
+    console.log(error)
 
-  if (error instanceof AppError) {
-    return response.status(error.statusCode).json({
-      message: error.message,
-    })
-  } else {
-    return response.status(500).json({
-      message: 'Internal Server Error',
-    })
-  }
-})
+    if (error instanceof AppError) {
+      return response.status(error.statusCode).json({
+        message: error.message,
+      })
+    } else {
+      return response.status(500).json({
+        message: 'Internal Server Error',
+      })
+    }
+  },
+)
 
 export default server

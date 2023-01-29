@@ -3,5 +3,5 @@ export type userPayload = {
 }
 
 export interface ISessionManager {
-    createSession(payload: userPayload): Promise<string>;
+  createSession(payload: userPayload): Promise<string>
 }

@@ -10,19 +10,21 @@ export class UpdateUserService extends UserService {
       throw AppError.notFound('User not found')
     }
 
-    const updatedUser = await this.userRepository.updateUser(persistedUser.update({
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      mobile: user.mobile
-      // password: user.password
-      // _id: user._id
-    }))
+    const updatedUser = await this.userRepository.updateUser(
+      persistedUser.update({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        mobile: user.mobile,
+        // password: user.password
+        // _id: user._id
+      }),
+    )
 
     if (!updatedUser) {
       throw AppError.notFound('User not found')
     }
-    
+
     return updatedUser
   }
 }

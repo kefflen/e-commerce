@@ -18,7 +18,6 @@ export type loggedInUserDTO = {
   user: normalizedUserDTO
 }
 
-
 export class User {
   private readonly _id: string
   private readonly _firstName: string
@@ -61,12 +60,13 @@ export class User {
       email: this.email,
       password: this.password,
       lastName: this.lastName,
-      mobile: this.mobile
+      mobile: this.mobile,
     }
   }
 
   toNormalizedJSON(): normalizedUserDTO {
-    const { password, ...normalizedUserDTO} = this.toJSON()
+    const { password, ...normalizedUserDTO } = this.toJSON()
+
     return normalizedUserDTO
   }
 
@@ -77,7 +77,7 @@ export class User {
       email: userDTO.email || this.email,
       password: userDTO.password || this.password,
       lastName: userDTO.lastName || this.lastName,
-      mobile: userDTO.mobile || this.mobile
+      mobile: userDTO.mobile || this.mobile,
     })
   }
 }
