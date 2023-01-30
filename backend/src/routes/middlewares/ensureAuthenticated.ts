@@ -2,9 +2,7 @@ import { NextFunction, Request, Response } from 'express'
 import { AppError } from '../../domain/errors/AppError'
 import { authServicesFactory } from '../../factories/authServicesFactory'
 
-const {
-  verifyAuthTokenService
-} = authServicesFactory()
+const { verifyAuthTokenService } = authServicesFactory()
 
 export async function ensureAuthenticated(
   request: Request,

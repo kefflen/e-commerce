@@ -4,7 +4,7 @@ import {
   UpdateUserService,
   DeleteUserService,
   GetUserByIdService,
-  ListUserService
+  ListUserService,
 } from '../domain/services/user-sevices'
 import { userServicesDepedencies } from '../domain/services/_contracts'
 import { MongoUserRepository } from '../infra/mongo/repositories/MongoUserRepository'

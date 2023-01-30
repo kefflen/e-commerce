@@ -18,7 +18,9 @@ export function authServicesFactory(): services {
     }
 
     instance = {
-      verifyAuthTokenService: new VerifyAuthTokenService(userServicesDepedencies),
+      verifyAuthTokenService: new VerifyAuthTokenService(
+        userServicesDepedencies,
+      ),
     }
   }
 
