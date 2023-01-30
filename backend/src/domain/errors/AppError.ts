@@ -26,4 +26,8 @@ export class AppError {
   static unauthorized(message: string) {
     return new this(message, 401)
   }
+
+  static forbidden(message: string) {
+    return new this(message, 403)
+  }
 }
