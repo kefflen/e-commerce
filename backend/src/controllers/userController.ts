@@ -1,17 +1,7 @@
 import { Request, Response } from 'express'
-import { CreateUserService } from '../domain/services/user-sevices'
-import { UpdateUserService } from '../domain/services/user-sevices/UpdateUserService'
-import { MongoUserRepository } from '../infra/mongo/repositories/MongoUserRepository'
-import { PasswordHandler, SessionManager } from '../infra/utils'
+import { userServiceFactory } from '../factories'
 
-const userDepedencies = {
-  userRepository: new MongoUserRepository(),
-  sessionManager: new SessionManager(),
-  passwordHandler: new PasswordHandler(),
-}
-
-const createUserService = new CreateUserService(userDepedencies)
-const updatedUserService = new UpdateUserService(userDepedencies)
+const { createUserService, updateUserService } = userServiceFactory()
 
 export const createUser = async (req: Request, res: Response) => {
   const { email, password, confirmPassword, firstName, mobile, lastName } =
@@ -36,7 +26,7 @@ export const createUser = async (req: Request, res: Response) => {
 export const updatedUser = async (req: Request, res: Response) => {
   const { userId } = req.params
   const { firstName, mobile, lastName } = req.body
-  const updatedUser = updatedUserService.execute({
+  const updatedUser = updateUserService.execute({
     _id: userId,
     firstName,
     mobile,

@@ -1,7 +1,7 @@
 import { IPasswordHandler, ISessionManager } from '../../ports'
 import { IUserRepository } from '../../repositories/IUserRepository'
 
-type depedencies = {
+export type userServicesDepedencies = {
   userRepository: IUserRepository
   sessionManager: ISessionManager
   passwordHandler: IPasswordHandler
@@ -12,7 +12,7 @@ export abstract class UserService {
   sessionManager: ISessionManager
   passwordHandler: IPasswordHandler
 
-  constructor(depedencies: depedencies) {
+  constructor(depedencies: userServicesDepedencies) {
     this.userRepository = depedencies.userRepository
     this.sessionManager = depedencies.sessionManager
     this.passwordHandler = depedencies.passwordHandler
