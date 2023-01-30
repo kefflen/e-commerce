@@ -27,7 +27,7 @@ export class MongoUserRepository implements IUserRepository {
   async getAllUsers(): Promise<User[]> {
     const usersData = await UserModel.find()
 
-    return usersData.map(user => new User(user.toJSON()))
+    return usersData.map((user) => new User(user.toJSON()))
   }
 
   async deleteUser(id: string): Promise<void> {

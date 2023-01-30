@@ -14,7 +14,7 @@ export class SessionManager implements ISessionManager {
     })
   }
 
-  verifySession(token: string): userPayload|null {
+  verifySession(token: string): userPayload | null {
     const SECRET_KEY = process.env.JWT_SECRET_KEY
     if (!SECRET_KEY) throw new Error('Missing SECRET_KEY')
 

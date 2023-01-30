@@ -13,7 +13,7 @@ type services = {
   updateUserService: UpdateUserService
 }
 
-let instance: services|null = null
+let instance: services | null = null
 
 export function userServiceFactory(): services {
   if (instance === null) {
