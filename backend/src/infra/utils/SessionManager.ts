@@ -13,4 +13,17 @@ export class SessionManager implements ISessionManager {
       expiresIn: '1d',
     })
   }
+
+  verifySession(token: string): userPayload|null {
+    const SECRET_KEY = process.env.JWT_SECRET_KEY
+    if (!SECRET_KEY) throw new Error('Missing SECRET_KEY')
+
+    try {
+      const payload = jwt.verify(token, SECRET_KEY) as userPayload
+
+      return payload
+    } catch (err) {
+      return null
+    }
+  }
 }

@@ -4,4 +4,5 @@ export type userPayload = {
 
 export interface ISessionManager {
   createSession(payload: userPayload): string
+  verifySession(id: string): userPayload|null
 }
