@@ -1,5 +1,5 @@
 export * from './CreateUserService'
-export * from './LoginService'
+export * from '../auth-service/LoginService'
 export * from './UpdateUserService'
 export * from './GetUserByIdService'
 export * from './DeleteUserService'
