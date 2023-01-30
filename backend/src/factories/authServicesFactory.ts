@@ -9,7 +9,7 @@ type services = {
 
 let instance: services | null = null
 
-export function userServicesFactory(): services {
+export function authServicesFactory(): services {
   if (instance === null) {
     const userServicesDepedencies: authServicesDepedencies = {
       userRepository: new MongoUserRepository(),
