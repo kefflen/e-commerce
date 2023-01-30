@@ -17,4 +17,3 @@ export abstract class AuthService {
 
   abstract execute(...args: unknown[]): Promise<unknown>
 }
-
