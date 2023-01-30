@@ -1,5 +1,10 @@
+
 declare namespace Express {
   export interface Request {
-    userId: string | null
+    payload: {
+      userId: string,
+      exp: number,
+      iat: number
+    }
   }
 }

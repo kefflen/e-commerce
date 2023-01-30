@@ -66,6 +66,6 @@ export const deleteUser = async (req: Request, res: Response) => {
 export const blockUser = async (req: Request, res: Response) => {
   const { userId } = req.params
   await blockUserService.execute(userId)
-  
+
   return res.sendStatus(204)
 }

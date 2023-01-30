@@ -1,8 +1,10 @@
 export type userPayload = {
-  id: string
+  userId: string
 }
+
+export type decodedPayload = userPayload & { iat: number; exp: number }
 
 export interface ISessionManager {
   createSession(payload: userPayload): string
-  verifySession(id: string): userPayload | null
+  verifySession(id: string): decodedPayload | null
 }

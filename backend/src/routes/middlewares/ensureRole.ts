@@ -10,7 +10,7 @@ export function ensureRole(role: ROLES) {
     response: Response,
     nextFunction: NextFunction,
   ) => {
-    const userId = request.userId
+    const userId = request.payload.userId
     if (!userId) throw Error('No user id')
     const user = await getUserByIdService.execute(userId)
 

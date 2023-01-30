@@ -1,9 +1,9 @@
 import { AppError } from '../../errors/AppError'
-import { userPayload } from '../../ports'
+import { decodedPayload, userPayload } from '../../ports'
 import { AuthService } from '../_contracts/AuthService'
 
 export class VerifyAuthTokenService extends AuthService {
-  async execute(bearerToken: string): Promise<userPayload> {
+  async execute(bearerToken: string): Promise<decodedPayload> {
     if (!bearerToken.startsWith('Bearer '))
       throw AppError.unauthorized('Invalid token')
 

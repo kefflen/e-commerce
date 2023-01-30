@@ -12,7 +12,6 @@ export async function ensureAuthenticated(
   const bearerToken = request.headers.authorization
   if (!bearerToken) throw AppError.unauthorized('Need to authenticate')
   const payload = await verifyAuthTokenService.execute(bearerToken)
-
-  request.userId = payload.id
+  request.payload = payload
   next()
 }

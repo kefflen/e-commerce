@@ -14,7 +14,7 @@ export class LoginService extends AuthService {
     if (!isValidPassword) throw AppError.badRequest('Invalid password or email')
 
     const token = await this.sessionManager.createSession({
-      id: user.id,
+      userId: user.id,
     })
 
     return {
