@@ -39,6 +39,7 @@
           { "blankLine": "always", "prev": "*", "next": "return" },
           { "blankLine": "always", "prev": "*", "next": "block-like" },
           { "blankLine": "always", "prev": "block-like", "next": "*" }
-        ]
+        ],
+        "@typescript-eslint/no-namespace": "off"
     }
 }
