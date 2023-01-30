@@ -7,6 +7,7 @@ const {
   getUserByIdService,
   listUserService,
   deleteUserService,
+  blockUserService,
 } = userServiceFactory()
 
 export const createUser = async (req: Request, res: Response) => {
@@ -59,5 +60,12 @@ export const deleteUser = async (req: Request, res: Response) => {
   const { userId } = req.params
   await deleteUserService.execute(userId)
 
+  return res.sendStatus(204)
+}
+
+export const blockUser = async (req: Request, res: Response) => {
+  const { userId } = req.params
+  await blockUserService.execute(userId)
+  
   return res.sendStatus(204)
 }

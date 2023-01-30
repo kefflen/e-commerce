@@ -1,10 +1,14 @@
-import { VerifyAuthTokenService } from '../domain/services/auth-service/VerifyAuthTokenService'
+import {
+  VerifyAuthTokenService,
+  LoginService,
+} from '../domain/services/auth-service'
 import { authServicesDepedencies } from '../domain/services/_contracts'
 import { MongoUserRepository } from '../infra/mongo/repositories/MongoUserRepository'
 import { SessionManager, PasswordHandler } from '../infra/utils'
 
 type services = {
   verifyAuthTokenService: VerifyAuthTokenService
+  loginService: LoginService
 }
 
 let instance: services | null = null
@@ -21,6 +25,7 @@ export function authServicesFactory(): services {
       verifyAuthTokenService: new VerifyAuthTokenService(
         userServicesDepedencies,
       ),
+      loginService: new LoginService(userServicesDepedencies),
     }
   }
 
