@@ -22,4 +22,8 @@ export class AppError {
   static conflict(message: string) {
     return new this(message, 409)
   }
+
+  static unauthorized(message: string) {
+    return new this(message, 401)
+  }
 }
