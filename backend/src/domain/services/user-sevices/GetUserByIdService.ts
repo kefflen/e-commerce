@@ -4,7 +4,7 @@ import { UserService } from '../_contracts'
 
 export class GetUserByIdService extends UserService {
   async execute(userId: string): Promise<normalizedUserDTO> {
-    const user = await this.userRepository.getUserById(userId)
+    const user = await this.userRepository.getById(userId)
     if (!user) throw AppError.notFound('User not found')
 
     return user.toNormalizedJSON()

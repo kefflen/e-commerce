@@ -4,7 +4,7 @@ import { AuthService } from '../_contracts'
 
 export class LoginService extends AuthService {
   async execute(email: string, password: string): Promise<loggedInUserDTO> {
-    const user = await this.userRepository.getUserByEmail(email)
+    const user = await this.userRepository.getByEmail(email)
     if (!user) throw AppError.notFound('User not found')
 
     const isValidPassword = this.passwordHandler.validate(

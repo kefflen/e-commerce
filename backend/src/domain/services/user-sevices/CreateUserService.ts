@@ -19,7 +19,7 @@ export class CreateUserService extends UserService {
       throw AppError.badRequest('Passwords do not match')
     }
 
-    const existUserWithEmail = !!(await this.userRepository.getUserByEmail(
+    const existUserWithEmail = !!(await this.userRepository.getByEmail(
       rest.email,
     ))
     if (existUserWithEmail) throw AppError.conflict('Email already exists')
@@ -31,7 +31,7 @@ export class CreateUserService extends UserService {
       ...rest,
     })
 
-    await this.userRepository.createUser(user)
+    await this.userRepository.create(user)
 
     return user.toNormalizedJSON()
   }

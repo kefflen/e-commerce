@@ -16,13 +16,13 @@ export class UpdateUserService extends UserService {
       | 'email'
     >,
   ): Promise<normalizedUserDTO> {
-    const persistedUser = await this.userRepository.getUserById(user._id)
+    const persistedUser = await this.userRepository.getById(user._id)
 
     if (!persistedUser) {
       throw AppError.notFound('User not found')
     }
 
-    const updatedUser = await this.userRepository.updateUser(
+    const updatedUser = await this.userRepository.update(
       persistedUser.update({
         firstName: user.firstName,
         lastName: user.lastName,
