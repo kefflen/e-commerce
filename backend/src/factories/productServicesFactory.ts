@@ -10,12 +10,12 @@ let instance: services | null = null
 
 export function productServicesFactory(): services {
   const depedencies: productServiceDepedencies = {
-    productRepository: new MongoProductRepository()
+    productRepository: new MongoProductRepository(),
   }
 
   if (instance === null) {
     instance = {
-      createProducServicet: new CreateProductService(depedencies)
+      createProducServicet: new CreateProductService(depedencies),
     }
   }
 
