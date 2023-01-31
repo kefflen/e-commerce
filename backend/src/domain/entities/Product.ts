@@ -27,6 +27,11 @@ export type createProductDTO = Omit<
   'createdAt' | 'updatedAt' | 'slugfy' | 'sold' | 'ratings'
 >
 
+export type updateProductDTO = Omit<
+  productDTO,
+  'createdAt' | 'updatedAt' | 'slugfy' | 'sold' | 'ratings'
+>
+
 export class Product {
   private _id: string
   private readonly _title: string

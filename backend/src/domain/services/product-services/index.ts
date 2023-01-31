@@ -1,1 +1,5 @@
 export * from './CreateProductService'
+export * from './DeleteProductService'
+export * from './GetProductByIdService'
+export * from './ListProductsService'
+export * from './UpdateProductService'
