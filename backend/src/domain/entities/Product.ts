@@ -1,4 +1,4 @@
-type ratings = {
+type rating = {
   stars: number
   postedBy: string
 }
@@ -14,10 +14,15 @@ export type productDTO = {
   imagesPaths: string[]
   color: string
   sold: number
-  ratings: ratings
+  ratings: rating[]
   createdAt: Date
   updatedAt: Date
 }
+
+export type createProductDTO = Omit<
+  productDTO,
+  'createdAt' | 'updatedAt' | 'slugfy' | 'sold' | 'ratings'
+>
 
 export class Product {
   private readonly _title: string
@@ -30,7 +35,7 @@ export class Product {
   private readonly _imagesPaths: string[]
   private readonly _color: string
   private readonly _sold: number
-  private readonly _ratings: ratings
+  private readonly _ratings: rating[]
   private readonly _createdAt: Date
   private readonly _updatedAt: Date
 
@@ -68,7 +73,15 @@ export class Product {
     }
   }
 
-  update(productDTO: Partial<productDTO>): Product {
+  update(productDTO: Partial<Omit<productDTO, 'slug'>>): Product {
+    let slug: string
+
+    if (productDTO.title) {
+      slug = Product.slugfy(productDTO.title)
+    } else {
+      slug = this.slug
+    }
+
     return new Product({
       title: productDTO.title || this.title,
       brand: productDTO.brand || this.brand,
@@ -79,13 +92,37 @@ export class Product {
       price: productDTO.price || this.price,
       quantity: productDTO.quantity || this.quantity,
       ratings: productDTO.ratings || this.ratings,
-      slug: productDTO.slug || this.slug,
+      slug: slug,
       sold: productDTO.sold || this.sold,
       createdAt: productDTO.createdAt || this.createdAt,
       updatedAt: productDTO.updatedAt || this.updatedAt,
     })
   }
+  private static slugfy(title: string): string {
+    return title
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^\w-]+/g, '')
+  }
+  static create(productDTO: createProductDTO): Product {
+    const slug = this.slugfy(productDTO.title)
 
+    return new this({
+      title: productDTO.title,
+      brand: productDTO.brand,
+      categoryId: productDTO.categoryId,
+      color: productDTO.color,
+      description: productDTO.description,
+      imagesPaths: productDTO.imagesPaths,
+      price: productDTO.price,
+      quantity: productDTO.quantity,
+      ratings: [],
+      slug,
+      sold: 0,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    })
+  }
   get title(): string {
     return this._title
   }
@@ -126,7 +163,7 @@ export class Product {
     return this._sold
   }
 
-  get ratings(): ratings {
+  get ratings(): rating[] {
     return this._ratings
   }
 
