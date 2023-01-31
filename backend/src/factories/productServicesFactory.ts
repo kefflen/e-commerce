@@ -33,5 +33,5 @@ export function productServicesFactory(): services {
     }
   }
 
-  return instance
+  return Object.freeze(instance)
 }
