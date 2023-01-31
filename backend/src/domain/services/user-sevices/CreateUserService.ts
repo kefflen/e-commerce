@@ -1,4 +1,3 @@
-import crypto from 'node:crypto'
 import {
   createUserDTO,
   normalizedUserDTO,
@@ -13,7 +12,9 @@ export class CreateUserService extends UserService {
     password,
     confirmPassword,
     ...rest
-  }: createUserDTO): Promise<normalizedUserDTO> {
+  }: createUserDTO & {
+    confirmPassword: string
+  }): Promise<normalizedUserDTO> {
     if (password !== confirmPassword) {
       throw AppError.badRequest('Passwords do not match')
     }
@@ -23,17 +24,10 @@ export class CreateUserService extends UserService {
     ))
     if (existUserWithEmail) throw AppError.conflict('Email already exists')
 
-    const id = crypto.randomUUID()
     const hashedPassword = await this.passwordHandler.encrypt(password)
-    const user = new User({
-      _id: id,
-      password: hashedPassword,
+    const user = User.create({
       role: ROLES.USER,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      isBlocked: false,
-      cart: [],
-      wishlist: [],
+      password: hashedPassword,
       ...rest,
     })
 

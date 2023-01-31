@@ -1,3 +1,4 @@
+import crypto from 'node:crypto'
 export enum ROLES {
   USER = 'USER',
   ADMIN = 'ADMIN',
@@ -23,9 +24,7 @@ export type normalizedUserDTO = Omit<userDTO, 'password'>
 export type createUserDTO = Omit<
   userDTO,
   '_id' | 'cart' | 'wishlist' | 'role' | 'createdAt' | 'updatedAt' | 'isBlocked'
-> & {
-  confirmPassword: string
-}
+>
 
 export type loggedInUserDTO = {
   token: string
@@ -129,6 +128,21 @@ export class User {
       wishlist: userDTO.wishlist || this.wishlist,
       createdAt: userDTO.createdAt || this.createdAt,
       updatedAt: userDTO.updatedAt || this.updatedAt,
+    })
+  }
+
+  static create(createUserDTO: createUserDTO & { role?: ROLES }): User {
+    const _id = crypto.randomUUID()
+
+    return new this({
+      _id,
+      isBlocked: false,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      cart: [],
+      wishlist: [],
+      role: createUserDTO.role || ROLES.USER,
+      ...createUserDTO,
     })
   }
 }
