@@ -1,9 +1,12 @@
+import crypto from 'crypto'
+
 type rating = {
   stars: number
   postedBy: string
 }
 
 export type productDTO = {
+  _id: string
   title: string
   slug: string
   description: string
@@ -25,6 +28,7 @@ export type createProductDTO = Omit<
 >
 
 export class Product {
+  private _id: string
   private readonly _title: string
   private readonly _slug: string
   private readonly _description: string
@@ -40,6 +44,7 @@ export class Product {
   private readonly _updatedAt: Date
 
   constructor(productDTO: productDTO) {
+    this._id = productDTO._id
     this._title = productDTO.title
     this._slug = productDTO.slug
     this._description = productDTO.description
@@ -57,6 +62,7 @@ export class Product {
 
   toJSON(): productDTO {
     return {
+      _id: this.id,
       title: this.title,
       brand: this.brand,
       categoryId: this.categoryId,
@@ -83,6 +89,7 @@ export class Product {
     }
 
     return new Product({
+      _id: this.id,
       title: productDTO.title || this.title,
       brand: productDTO.brand || this.brand,
       categoryId: productDTO.categoryId || this.categoryId,
@@ -106,8 +113,10 @@ export class Product {
   }
   static create(productDTO: createProductDTO): Product {
     const slug = this.slugfy(productDTO.title)
+    const _id = crypto.randomUUID()
 
     return new this({
+      _id,
       title: productDTO.title,
       brand: productDTO.brand,
       categoryId: productDTO.categoryId,
@@ -122,6 +131,9 @@ export class Product {
       createdAt: new Date(),
       updatedAt: new Date(),
     })
+  }
+  get id(): string {
+    return this._id
   }
   get title(): string {
     return this._title
