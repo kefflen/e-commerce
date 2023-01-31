@@ -24,3 +24,14 @@ services:
       - ME_CONFIG_MONGODB_ADMINPASSWORD=root
     depends_on:
       - mongo
+
+  redis:
+    image: redis:alpine
+    restart: always
+    ports:
+      - 6379:6379
+    volumes:
+      - ./.docker/redis:/data
+    environment:
+      - REDIS_APPENDONLY=yes
+      - REDIS_APPENDFILENAME=appendonly.aof
