@@ -9,7 +9,7 @@ import { productServiceDepedencies } from '../domain/services/_contracts/Product
 import { MongoProductRepository } from '../infra/mongo/repositories/MongoProductRepository'
 
 type services = {
-  createProducServicet: CreateProductService
+  createProducService: CreateProductService
   deleteProductService: DeleteProductService
   getProductByIdService: GetProductByIdService
   listProductsService: ListProductsService
@@ -23,9 +23,9 @@ export function productServicesFactory(): services {
     productRepository: new MongoProductRepository(),
   }
 
-  if (instance === null) {
+  if (instance === null || true) {
     instance = {
-      createProducServicet: new CreateProductService(depedencies),
+      createProducService: new CreateProductService(depedencies),
       deleteProductService: new DeleteProductService(depedencies),
       getProductByIdService: new GetProductByIdService(depedencies),
       listProductsService: new ListProductsService(depedencies),

@@ -6,13 +6,14 @@ import {
   getProducts,
   updateProduct,
 } from '../controllers/productController'
+import { upload } from './middlewares/uploads'
 
 const productRoutes = Router()
 
 productRoutes.get('/', getProducts)
-productRoutes.post('/', createProduct)
+productRoutes.post('/', upload.array('images'), createProduct)
 productRoutes.get('/:productId', getProductById)
-productRoutes.post('/:productId', updateProduct)
+productRoutes.post('/:productId', upload.array('images[]'), updateProduct)
 productRoutes.delete('/:productId', deleteProduct)
 
 export default productRoutes

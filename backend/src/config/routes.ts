@@ -6,6 +6,6 @@ import userRoutes from '../routes/userRoutes'
 const routes = Router()
 routes.use('/users', userRoutes)
 routes.use('/auth', authRoutes)
-routes.use('products', productRoutes)
+routes.use('/products', productRoutes)
 
 export default routes
