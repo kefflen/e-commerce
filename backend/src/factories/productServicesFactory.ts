@@ -4,7 +4,7 @@ import {
   GetProductByIdService,
   ListProductsService,
   UpdateProductService,
-  AddProductImageService
+  AddProductImageService,
 } from '../domain/services/product-services'
 import { productServiceDepedencies } from '../domain/services/_contracts/ProductService'
 import { MongoProductRepository } from '../infra/mongo/repositories/MongoProductRepository'
@@ -32,7 +32,7 @@ export function productServicesFactory(): services {
       getProductByIdService: new GetProductByIdService(depedencies),
       listProductsService: new ListProductsService(depedencies),
       updateProductService: new UpdateProductService(depedencies),
-      addProductImageService: new AddProductImageService(depedencies)
+      addProductImageService: new AddProductImageService(depedencies),
     }
   }
 

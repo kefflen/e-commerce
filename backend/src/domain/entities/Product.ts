@@ -95,7 +95,9 @@ export class Product {
 
   removeImage(imageFilename: string): Product {
     const { imagesFilename, ...rest } = this.toJSON()
-    const newImagesFilename = imagesFilename.filter((path) => path !== imageFilename)
+    const newImagesFilename = imagesFilename.filter(
+      (path) => path !== imageFilename,
+    )
 
     return new Product({ ...rest, imagesFilename: newImagesFilename })
   }
