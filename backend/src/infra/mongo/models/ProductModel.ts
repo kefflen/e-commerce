@@ -2,6 +2,10 @@ import { model, Schema } from 'mongoose'
 
 const ProductSchema = new Schema(
   {
+    _id: {
+      type: String,
+      required: true,
+    },
     title: {
       type: 'string',
       required: true,
@@ -19,7 +23,7 @@ const ProductSchema = new Schema(
       default: 0,
     },
     categoryId: {
-      type: Schema.Types.ObjectId,
+      type: String,
       ref: 'Category',
     },
     brand: {
@@ -47,7 +51,7 @@ const ProductSchema = new Schema(
       {
         stars: Number,
         postedBy: {
-          type: Schema.Types.ObjectId,
+          type: String,
           ref: 'User',
         },
       },

@@ -39,13 +39,13 @@ const UserSchema = new Schema(
     },
     wishlist: [
       {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: 'Product',
       },
     ],
     cart: [
       {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: 'Product',
       },
     ],
