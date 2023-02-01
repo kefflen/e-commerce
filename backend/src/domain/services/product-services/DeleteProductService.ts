@@ -1,4 +1,4 @@
-import { ProductService } from "../_contracts/ProductService";
+import { ProductService } from '../_contracts/ProductService'
 
 export class DeleteProductService extends ProductService {
   async execute(productId: string): Promise<void> {

@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import {
+  addProductImageController,
   createProduct,
   deleteProduct,
   getProductById,
@@ -15,5 +16,6 @@ productRoutes.post('/', upload.array('images'), createProduct)
 productRoutes.get('/:productId', getProductById)
 productRoutes.post('/:productId', updateProduct)
 productRoutes.delete('/:productId', deleteProduct)
+productRoutes.put('/:productId/add-image', addProductImageController)
 
 export default productRoutes

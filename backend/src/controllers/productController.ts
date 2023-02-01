@@ -10,6 +10,7 @@ const {
   getProductByIdService,
   listProductsService,
   updateProductService,
+  addProductImageService
 } = productServicesFactory()
 
 export const getProducts = async (req: Request, res: Response) => {
@@ -29,7 +30,7 @@ export const createProduct = async (req: Request, res: Response) => {
   try {
     if (!files) throw AppError.badRequest('Need to upload images')
 
-    const imagesPaths = files.map((file) => file.filename)
+    const imagesFilename = files.map((file) => file.filename)
     const { title, brand, categoryId, color, description, price, quantity } =
       req.body
 
@@ -39,7 +40,7 @@ export const createProduct = async (req: Request, res: Response) => {
       categoryId,
       color,
       description,
-      imagesPaths,
+      imagesFilename,
       price,
       quantity,
     })
@@ -89,4 +90,14 @@ export const deleteProduct = async (req: Request, res: Response) => {
   await deleteProductService.execute(productId)
 
   return res.sendStatus(204)
+}
+
+export const addProductImageController = async (req: Request, res: Response) => {
+  const file = req.file
+  if (!file) throw AppError.badRequest('File not found')
+
+  const { productId } = req.params
+  const updatedProduct = await addProductImageService.execute(productId, file.filename)
+
+  return res.json(updatedProduct)
 }

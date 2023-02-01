@@ -34,7 +34,7 @@ const ProductSchema = new Schema(
       type: Number,
       required: true,
     },
-    imagesPath: [
+    imagesFilename: [
       {
         type: String,
       },

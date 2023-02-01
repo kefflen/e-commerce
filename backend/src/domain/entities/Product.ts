@@ -14,7 +14,7 @@ export type productDTO = {
   categoryId: string
   brand: string
   quantity: number
-  imagesPaths: string[]
+  imagesFilename: string[]
   color: string
   sold: number
   ratings: rating[]
@@ -29,7 +29,7 @@ export type createProductDTO = Omit<
 
 export type updateProductDTO = Omit<
   productDTO,
-  'createdAt' | 'updatedAt' | 'slug' | 'sold' | 'ratings' | 'imagesPaths'
+  'createdAt' | 'updatedAt' | 'slug' | 'sold' | 'ratings' | 'imagesFilename'
 >
 
 export class Product {
@@ -41,7 +41,7 @@ export class Product {
   private readonly _categoryId: string
   private readonly _brand: string
   private readonly _quantity: number
-  private readonly _imagesPaths: string[]
+  private readonly _imagesFilename: string[]
   private readonly _color: string
   private readonly _sold: number
   private readonly _ratings: rating[]
@@ -57,7 +57,7 @@ export class Product {
     this._categoryId = productDTO.categoryId
     this._brand = productDTO.brand
     this._quantity = productDTO.quantity
-    this._imagesPaths = productDTO.imagesPaths
+    this._imagesFilename = productDTO.imagesFilename
     this._color = productDTO.color
     this._sold = productDTO.sold
     this._ratings = productDTO.ratings
@@ -73,15 +73,31 @@ export class Product {
       categoryId: this.categoryId,
       color: this.color,
       description: this.description,
-      imagesPaths: this.imagesPaths,
+      imagesFilename: [...this.imagesFilename],
       price: this.price,
       quantity: this.quantity,
-      ratings: this.ratings,
+      ratings: [...this.ratings],
       slug: this.slug,
       sold: this.sold,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
     }
+  }
+
+  addImage(imageFilename: string): Product {
+    const { imagesFilename, ...rest } = this.toJSON()
+
+    return new Product({
+      ...rest,
+      imagesFilename: [...imagesFilename, imageFilename],
+    })
+  }
+
+  removeImage(imageFilename: string): Product {
+    const { imagesFilename, ...rest } = this.toJSON()
+    const newImagesFilename = imagesFilename.filter((path) => path !== imageFilename)
+
+    return new Product({ ...rest, imagesFilename: newImagesFilename })
   }
 
   update(productDTO: Partial<Omit<productDTO, 'slug'>>): Product {
@@ -100,7 +116,7 @@ export class Product {
       categoryId: productDTO.categoryId || this.categoryId,
       color: productDTO.color || this.color,
       description: productDTO.description || this.description,
-      imagesPaths: productDTO.imagesPaths || this.imagesPaths,
+      imagesFilename: productDTO.imagesFilename || this.imagesFilename,
       price: productDTO.price || this.price,
       quantity: productDTO.quantity || this.quantity,
       ratings: productDTO.ratings || this.ratings,
@@ -110,12 +126,7 @@ export class Product {
       updatedAt: productDTO.updatedAt || this.updatedAt,
     })
   }
-  private static slugfy(title: string): string {
-    return title
-      .toLowerCase()
-      .replace(/\s+/g, '-')
-      .replace(/[^\w-]+/g, '')
-  }
+
   static create(productDTO: createProductDTO): Product {
     const slug = this.slugfy(productDTO.title)
     const _id = crypto.randomUUID()
@@ -127,7 +138,7 @@ export class Product {
       categoryId: productDTO.categoryId,
       color: productDTO.color,
       description: productDTO.description,
-      imagesPaths: productDTO.imagesPaths,
+      imagesFilename: productDTO.imagesFilename,
       price: productDTO.price,
       quantity: productDTO.quantity,
       ratings: [],
@@ -137,6 +148,14 @@ export class Product {
       updatedAt: new Date(),
     })
   }
+
+  private static slugfy(title: string): string {
+    return title
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^\w-]+/g, '')
+  }
+
   get id(): string {
     return this._id
   }
@@ -168,8 +187,8 @@ export class Product {
     return this._quantity
   }
 
-  get imagesPaths(): string[] {
-    return this._imagesPaths
+  get imagesFilename(): string[] {
+    return this._imagesFilename
   }
 
   get color(): string {

@@ -4,6 +4,7 @@ import {
   GetProductByIdService,
   ListProductsService,
   UpdateProductService,
+  AddProductImageService
 } from '../domain/services/product-services'
 import { productServiceDepedencies } from '../domain/services/_contracts/ProductService'
 import { MongoProductRepository } from '../infra/mongo/repositories/MongoProductRepository'
@@ -14,6 +15,7 @@ type services = {
   getProductByIdService: GetProductByIdService
   listProductsService: ListProductsService
   updateProductService: UpdateProductService
+  addProductImageService: AddProductImageService
 }
 
 let instance: services | null = null
@@ -23,13 +25,14 @@ export function productServicesFactory(): services {
     productRepository: new MongoProductRepository(),
   }
 
-  if (instance === null || true) {
+  if (instance === null) {
     instance = {
       createProducService: new CreateProductService(depedencies),
       deleteProductService: new DeleteProductService(depedencies),
       getProductByIdService: new GetProductByIdService(depedencies),
       listProductsService: new ListProductsService(depedencies),
       updateProductService: new UpdateProductService(depedencies),
+      addProductImageService: new AddProductImageService(depedencies)
     }
   }
 
