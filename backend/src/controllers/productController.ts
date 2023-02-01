@@ -68,7 +68,6 @@ export const updateProduct = async (req: Request, res: Response) => {
     description,
     price,
     quantity,
-    imagesPaths,
   } = req.body
 
   const updatedProduct = await updateProductService.execute({
@@ -80,7 +79,6 @@ export const updateProduct = async (req: Request, res: Response) => {
     description,
     price,
     quantity,
-    imagesPaths,
   })
 
   return res.json(updatedProduct)

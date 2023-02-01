@@ -29,7 +29,7 @@ export type createProductDTO = Omit<
 
 export type updateProductDTO = Omit<
   productDTO,
-  'createdAt' | 'updatedAt' | 'slug' | 'sold' | 'ratings'
+  'createdAt' | 'updatedAt' | 'slug' | 'sold' | 'ratings' | 'imagesPaths'
 >
 
 export class Product {
