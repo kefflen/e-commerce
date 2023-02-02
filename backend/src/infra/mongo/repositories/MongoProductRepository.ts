@@ -1,12 +1,21 @@
+import { Document, Query } from 'mongoose'
 import { Product } from '../../../domain/entities/Product'
 import { IProductRepository } from '../../../domain/repositories/IProductRepository'
+import { repositoryOptions } from '../../../domain/repositories/_contracts/IRepository'
 import { ProductModel } from '../models/ProductModel'
 
 export class MongoProductRepository implements IProductRepository {
-  async list(): Promise<Product[]> {
-    const productsData = await ProductModel.find()
+  async list(options: repositoryOptions): Promise<Product[]> {
+    let query = ProductModel.find()
 
-    return productsData.map((product) => new Product(product.toJSON()))
+    if (options.pagination) {
+      const { take, page } = options.pagination
+      query = query.limit(take).skip((page - 1) * take)
+    }
+
+    const productsData = await query
+
+    return productsData.map((productData) => new Product(productData.toJSON()))
   }
 
   async create(product: Product): Promise<Product> {

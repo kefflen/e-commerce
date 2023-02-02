@@ -14,7 +14,14 @@ const {
 } = productServicesFactory()
 
 export const getProducts = async (req: Request, res: Response) => {
-  const products = await listProductsService.execute()
+  const page = req.query.page || 1
+
+  const isNaN = Number.isNaN(+page)
+  const isNotInteger = !Number.isInteger(+page)
+  if (isNaN && isNotInteger)
+    throw AppError.badRequest('page must be a integer number')
+
+  const products = await listProductsService.execute(+page)
   res.json(products)
 }
 

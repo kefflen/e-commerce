@@ -1,5 +1,6 @@
 import { User } from '../../../domain/entities/User'
 import { IUserRepository } from '../../../domain/repositories'
+import { repositoryOptions } from '../../../domain/repositories/_contracts/IRepository'
 import { UserModel } from '../models/UserModel'
 
 export class MongoUserRepository implements IUserRepository {
@@ -24,10 +25,17 @@ export class MongoUserRepository implements IUserRepository {
     return new User(savedUser.toJSON())
   }
 
-  async list(): Promise<User[]> {
-    const usersData = await UserModel.find()
+  async list(options: repositoryOptions): Promise<User[]> {
+    let query = UserModel.find()
 
-    return usersData.map((user) => new User(user.toJSON()))
+    if (options.pagination) {
+      const { take, page } = options.pagination
+      query = query.limit(take).skip((page - 1) * take)
+    }
+
+    const productsData = await query
+
+    return productsData.map((user) => new User(user.toJSON()))
   }
 
   async delete(id: string): Promise<void> {
