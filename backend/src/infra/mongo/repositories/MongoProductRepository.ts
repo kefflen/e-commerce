@@ -1,4 +1,3 @@
-import { Document, Query } from 'mongoose'
 import { Product } from '../../../domain/entities/Product'
 import { IProductRepository } from '../../../domain/repositories/IProductRepository'
 import { repositoryOptions } from '../../../domain/repositories/_contracts/IRepository'

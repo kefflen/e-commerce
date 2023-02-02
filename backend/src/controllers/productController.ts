@@ -3,6 +3,7 @@ import path from 'path'
 import { Request, Response } from 'express'
 import { AppError } from '../domain/errors/AppError'
 import { productServicesFactory } from '../factories'
+import { buildFindQuery } from './utils/buildFindQuery'
 
 const {
   createProducService,
@@ -14,15 +15,19 @@ const {
 } = productServicesFactory()
 
 export const getProducts = async (req: Request, res: Response) => {
-  const page = req.query.page || 1
+  const { page = 1, ...query } = req.query
 
   const isNaN = Number.isNaN(+page)
   const isNotInteger = !Number.isInteger(+page)
   if (isNaN && isNotInteger)
     throw AppError.badRequest('page must be a integer number')
 
-  const products = await listProductsService.execute(+page)
-  res.json(products)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const findQuery: { [k: string]: any } = buildFindQuery(query)
+
+  const products = await listProductsService.execute(+page, findQuery)
+
+  return res.json(products)
 }
 
 export const getProductById = async (req: Request, res: Response) => {

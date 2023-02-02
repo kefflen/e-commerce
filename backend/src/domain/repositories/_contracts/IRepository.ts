@@ -7,11 +7,12 @@ export type repositoryOptions<T> = {
 }
 
 export type IQueryOptions<T> = {
+  // eslint-disable-next-line @typescript-eslint/ban-types
   [k in keyof T as T[k] extends Function ? never : k]?:
     | T[k]
     | {
-        lte: T[k]
-        gte: T[k]
+        $lte: T[k]
+        $gte: T[k]
       }
 }
 
