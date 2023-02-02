@@ -25,12 +25,16 @@ export class MongoUserRepository implements IUserRepository {
     return new User(savedUser.toJSON())
   }
 
-  async list(options: repositoryOptions): Promise<User[]> {
+  async list(options: repositoryOptions<User>): Promise<User[]> {
     let query = UserModel.find()
 
     if (options.pagination) {
       const { take, page } = options.pagination
       query = query.limit(take).skip((page - 1) * take)
+    }
+
+    if (options.where) {
+      query.where(options.where)
     }
 
     const productsData = await query

@@ -5,12 +5,16 @@ import { repositoryOptions } from '../../../domain/repositories/_contracts/IRepo
 import { ProductModel } from '../models/ProductModel'
 
 export class MongoProductRepository implements IProductRepository {
-  async list(options: repositoryOptions): Promise<Product[]> {
+  async list(options: repositoryOptions<Product>): Promise<Product[]> {
     let query = ProductModel.find()
 
     if (options.pagination) {
       const { take, page } = options.pagination
       query = query.limit(take).skip((page - 1) * take)
+    }
+
+    if (options.where) {
+      query.where(options.where)
     }
 
     const productsData = await query
