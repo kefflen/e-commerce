@@ -16,6 +16,10 @@ export class MongoProductRepository implements IProductRepository {
       query.where(options.where)
     }
 
+    if (options.sortings) {
+      query.sort(options.sortings)
+    }
+
     const productsData = await query
 
     return productsData.map((productData) => new Product(productData.toJSON()))

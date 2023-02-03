@@ -4,11 +4,13 @@ export type repositoryOptions<T> = {
     page: number
   }
   where?: IQueryOptions<T>
+  sortings?: {
+    [k in keyof T as T[k] extends string|number|Date ? k : never]: 1 | -1
+  }
 }
 
 export type IQueryOptions<T> = {
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  [k in keyof T as T[k] extends Function ? never : k]?:
+  [k in keyof T as T[k] extends string|number|Date ? k : never]?:
     | T[k]
     | {
         $lte: T[k]

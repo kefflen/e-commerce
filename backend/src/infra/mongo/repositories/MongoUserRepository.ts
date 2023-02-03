@@ -37,6 +37,10 @@ export class MongoUserRepository implements IUserRepository {
       query.where(options.where)
     }
 
+    if (options.sortings) {
+      query.sort(options.sortings)
+    }
+
     const productsData = await query
 
     return productsData.map((user) => new User(user.toJSON()))
