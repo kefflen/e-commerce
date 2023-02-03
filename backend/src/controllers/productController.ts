@@ -4,6 +4,7 @@ import { Request, Response } from 'express'
 import { AppError } from '../domain/errors/AppError'
 import { productServicesFactory } from '../factories'
 import { buildFindQuery } from './utils/buildFindQuery'
+import { buildSortings } from './utils/buildSortings'
 
 const {
   createProducService,
@@ -15,7 +16,7 @@ const {
 } = productServicesFactory()
 
 export const getProducts = async (req: Request, res: Response) => {
-  const { page = 1, ...query } = req.query
+  const { page = 1, sortBy, sortByDesc, ...query } = req.query
 
   const isNaN = Number.isNaN(+page)
   const isNotInteger = !Number.isInteger(+page)
@@ -24,8 +25,9 @@ export const getProducts = async (req: Request, res: Response) => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const findQuery: { [k: string]: any } = buildFindQuery(query)
+  const sortings = buildSortings(sortBy, sortByDesc)
 
-  const products = await listProductsService.execute(+page, findQuery)
+  const products = await listProductsService.execute(+page, findQuery, sortings)
 
   return res.json(products)
 }
@@ -112,3 +114,5 @@ export const addProductImageController = async (
 
   return res.json(updatedProduct)
 }
+
+
