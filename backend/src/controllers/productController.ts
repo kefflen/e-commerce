@@ -15,7 +15,7 @@ const {
   addProductImageService,
 } = productServicesFactory()
 
-export const getProducts = async (req: Request, res: Response) => {
+export const getProductsController = async (req: Request, res: Response) => {
   const { page = 1, sortBy, sortByDesc, ...query } = req.query
 
   const isNaN = Number.isNaN(+page)
@@ -38,7 +38,7 @@ export const getProductById = async (req: Request, res: Response) => {
   res.json(product)
 }
 
-export const createProduct = async (req: Request, res: Response) => {
+export const createProductController = async (req: Request, res: Response) => {
   const files = req.files as Express.Multer.File[] | null
 
   try {
@@ -73,7 +73,7 @@ export const createProduct = async (req: Request, res: Response) => {
   }
 }
 
-export const updateProduct = async (req: Request, res: Response) => {
+export const updateProductController = async (req: Request, res: Response) => {
   const { productId } = req.params
   const { title, brand, categoryId, color, description, price, quantity } =
     req.body
@@ -92,7 +92,7 @@ export const updateProduct = async (req: Request, res: Response) => {
   return res.json(updatedProduct)
 }
 
-export const deleteProduct = async (req: Request, res: Response) => {
+export const deleteProductController = async (req: Request, res: Response) => {
   const { productId } = req.params
   await deleteProductService.execute(productId)
 
@@ -114,5 +114,3 @@ export const addProductImageController = async (
 
   return res.json(updatedProduct)
 }
-
-

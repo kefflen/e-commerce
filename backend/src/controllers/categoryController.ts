@@ -41,7 +41,10 @@ export const listCategoryController = async (req: Request, res: Response) => {
   return res.status(200).json(categories)
 }
 
-export const getCategoryById = async (req: Request, res: Response) => {
+export const getCategoryByIdController = async (
+  req: Request,
+  res: Response,
+) => {
   const { categoryId } = req.params
 
   const category = await getCategoryService.execute(categoryId)

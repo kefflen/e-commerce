@@ -11,7 +11,7 @@ const {
   blockUserService,
 } = userServiceFactory()
 
-export const createUser = async (req: Request, res: Response) => {
+export const createUserController = async (req: Request, res: Response) => {
   const { email, password, confirmPassword, firstName, mobile, lastName } =
     req.body
 
@@ -31,7 +31,7 @@ export const createUser = async (req: Request, res: Response) => {
   return res.status(201).json(createdUser)
 }
 
-export const updatedUser = async (req: Request, res: Response) => {
+export const updatedUserController = async (req: Request, res: Response) => {
   const { userId } = req.params
   const { firstName, mobile, lastName } = req.body
   const updatedUser = updateUserService.execute({
@@ -44,14 +44,14 @@ export const updatedUser = async (req: Request, res: Response) => {
   return res.status(200).json(updatedUser)
 }
 
-export const getUserById = async (req: Request, res: Response) => {
+export const getUserByIdController = async (req: Request, res: Response) => {
   const { userId } = req.params
   const user = await getUserByIdService.execute(userId)
 
   return res.status(200).json(user)
 }
 
-export const listUsers = async (req: Request, res: Response) => {
+export const listUsersController = async (req: Request, res: Response) => {
   const page = req.query.page || 1
 
   const isNaN = Number.isNaN(+page)
@@ -64,14 +64,14 @@ export const listUsers = async (req: Request, res: Response) => {
   return res.status(200).json(users)
 }
 
-export const deleteUser = async (req: Request, res: Response) => {
+export const deleteUserController = async (req: Request, res: Response) => {
   const { userId } = req.params
   await deleteUserService.execute(userId)
 
   return res.sendStatus(204)
 }
 
-export const blockUser = async (req: Request, res: Response) => {
+export const blockUserController = async (req: Request, res: Response) => {
   const { userId } = req.params
   await blockUserService.execute(userId)
 
