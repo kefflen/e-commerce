@@ -33,55 +33,13 @@ export type updateProductDTO = Omit<
 >
 
 export class Product {
-  private _id: string
-  private readonly _title: string
-  private readonly _slug: string
-  private readonly _description: string
-  private readonly _price: number
-  private readonly _categoryId: string
-  private readonly _brand: string
-  private readonly _quantity: number
-  private readonly _imagesFilename: string[]
-  private readonly _color: string
-  private readonly _sold: number
-  private readonly _ratings: rating[]
-  private readonly _createdAt: Date
-  private readonly _updatedAt: Date
-
+  private readonly dto: productDTO
   constructor(productDTO: productDTO) {
-    this._id = productDTO._id
-    this._title = productDTO.title
-    this._slug = productDTO.slug
-    this._description = productDTO.description
-    this._price = productDTO.price
-    this._categoryId = productDTO.categoryId
-    this._brand = productDTO.brand
-    this._quantity = productDTO.quantity
-    this._imagesFilename = productDTO.imagesFilename
-    this._color = productDTO.color
-    this._sold = productDTO.sold
-    this._ratings = productDTO.ratings
-    this._createdAt = productDTO.createdAt
-    this._updatedAt = productDTO.updatedAt
+    this.dto = {...productDTO}
   }
 
   toJSON(): productDTO {
-    return {
-      _id: this.id,
-      title: this.title,
-      brand: this.brand,
-      categoryId: this.categoryId,
-      color: this.color,
-      description: this.description,
-      imagesFilename: [...this.imagesFilename],
-      price: this.price,
-      quantity: this.quantity,
-      ratings: [...this.ratings],
-      slug: this.slug,
-      sold: this.sold,
-      createdAt: this.createdAt,
-      updatedAt: this.updatedAt,
-    }
+    return structuredClone(this.dto)
   }
 
   addImage(imageFilename: string): Product {
@@ -111,22 +69,11 @@ export class Product {
       slug = this.slug
     }
 
-    return new Product({
-      _id: this.id,
-      title: productDTO.title || this.title,
-      brand: productDTO.brand || this.brand,
-      categoryId: productDTO.categoryId || this.categoryId,
-      color: productDTO.color || this.color,
-      description: productDTO.description || this.description,
-      imagesFilename: productDTO.imagesFilename || this.imagesFilename,
-      price: productDTO.price || this.price,
-      quantity: productDTO.quantity || this.quantity,
-      ratings: productDTO.ratings || this.ratings,
-      slug: slug,
-      sold: productDTO.sold || this.sold,
-      createdAt: productDTO.createdAt || this.createdAt,
-      updatedAt: productDTO.updatedAt || this.updatedAt,
-    })
+    const updateDTO = Object.fromEntries(
+      Object.entries(productDTO).filter((entry) => entry[1] !== undefined),
+    )
+
+    return new Product({ ...this.dto, ...updateDTO, slug })
   }
 
   static create(productDTO: createProductDTO): Product {
@@ -159,57 +106,57 @@ export class Product {
   }
 
   get id(): string {
-    return this._id
+    return this.dto._id
   }
   get title(): string {
-    return this._title
+    return this.dto.title
   }
 
   get slug(): string {
-    return this._slug
+    return this.dto.slug
   }
 
   get description(): string {
-    return this._description
+    return this.dto.description
   }
 
   get price(): number {
-    return this._price
+    return this.dto.price
   }
 
   get categoryId(): string {
-    return this._categoryId
+    return this.dto.categoryId
   }
 
   get brand(): string {
-    return this._brand
+    return this.dto.brand
   }
 
   get quantity(): number {
-    return this._quantity
+    return this.dto.quantity
   }
 
   get imagesFilename(): string[] {
-    return this._imagesFilename
+    return this.dto.imagesFilename
   }
 
   get color(): string {
-    return this._color
+    return this.dto.color
   }
 
   get sold(): number {
-    return this._sold
+    return this.dto.sold
   }
 
   get ratings(): rating[] {
-    return this._ratings
+    return this.dto.ratings
   }
 
   get createdAt(): Date {
-    return this._createdAt
+    return this.dto.createdAt
   }
 
   get updatedAt(): Date {
-    return this._updatedAt
+    return this.dto.updatedAt
   }
 }
