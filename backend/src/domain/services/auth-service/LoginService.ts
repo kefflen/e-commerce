@@ -1,3 +1,4 @@
+import { RefreshToken } from '../../entities/RefreshToken'
 import { loggedInUserDTO } from '../../entities/User'
 import { AppError } from '../../errors/AppError'
 import { AuthService } from '../_contracts'
@@ -13,12 +14,18 @@ export class LoginService extends AuthService {
     )
     if (!isValidPassword) throw AppError.badRequest('Invalid password or email')
 
-    const token = await this.sessionManager.createSession({
+    const auth = await this.sessionManager.createSession({
       userId: user.id,
     })
 
+    const refreshToken = RefreshToken.create({
+      refreshToken: auth.refreshToken,
+      userId: user.id,
+    })
+    await this.refreshTokenRepository.createOrUpdateByUserId(user.id, refreshToken)
+
     return {
-      token,
+      auth,
       user: user.toNormalizedJSON(),
     }
   }

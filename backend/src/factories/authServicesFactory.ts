@@ -1,17 +1,20 @@
 import {
   VerifyAuthTokenService,
   LoginService,
+  LogoutService,
+  RefreshTokenService
 } from '../domain/services/auth-service'
 import { authServicesDepedencies } from '../domain/services/_contracts'
 import { MongoUserRepository } from '../infra/mongo/repositories/MongoUserRepository'
 import { SessionManager, PasswordHandler } from '../infra/utils'
 import { RedisCacheDataAccess } from '../infra/redis/RedisCacheDataAccess'
-import { LogoutService } from '../domain/services/auth-service/LogoutService'
+import { MongoRefreshTokenRepository } from '../infra/mongo/repositories/MongoRefreshTokenRepository'
 
 type services = {
   verifyAuthTokenService: VerifyAuthTokenService
   loginService: LoginService
   logoutService: LogoutService
+  refreshTokenService: RefreshTokenService
 }
 
 let instance: services | null = null
@@ -23,6 +26,7 @@ export function authServicesFactory(): services {
       sessionManager: new SessionManager(),
       passwordHandler: new PasswordHandler(),
       cacheDataAccess: new RedisCacheDataAccess(),
+      refreshTokenRepository: new MongoRefreshTokenRepository(),
     }
 
     instance = {
@@ -31,6 +35,7 @@ export function authServicesFactory(): services {
       ),
       loginService: new LoginService(authServicesDepedencies),
       logoutService: new LogoutService(authServicesDepedencies),
+      refreshTokenService: new RefreshTokenService(authServicesDepedencies)
     }
   }
 

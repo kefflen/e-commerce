@@ -55,12 +55,4 @@ export class MongoBrandRepository implements IBrandRepository {
 
     return new Brand(brandData.toJSON())
   }
-
-  async getBySlug(slug: string): Promise<Brand | null> {
-    const brandData = await BrandModel.findOne({ slug })
-
-    if (!brandData) return null
-
-    return new Brand(brandData.toJSON())
-  }
 }

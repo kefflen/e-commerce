@@ -12,6 +12,9 @@ export async function ensureAuthenticated(
   const bearerToken = request.headers.authorization
   if (!bearerToken) throw AppError.unauthorized('Need to authenticate')
   const payload = await verifyAuthTokenService.execute(bearerToken)
+
+  if (payload.isRefreshToken) throw AppError.unauthorized('Need to authenticate with correct token')
+
   request.payload = payload
   next()
 }

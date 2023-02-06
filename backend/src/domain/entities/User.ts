@@ -27,7 +27,10 @@ export type createUserDTO = Omit<
 >
 
 export type loggedInUserDTO = {
-  token: string
+  auth:{
+    token: string,
+    refreshToken: string
+  }
   user: normalizedUserDTO
 }
 

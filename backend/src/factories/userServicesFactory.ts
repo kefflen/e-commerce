@@ -7,6 +7,7 @@ import {
   BlockUserService,
 } from '../domain/services/user-sevices'
 import { userServicesDepedencies } from '../domain/services/_contracts'
+import { MongoRefreshTokenRepository } from '../infra/mongo/repositories/MongoRefreshTokenRepository'
 import { MongoUserRepository } from '../infra/mongo/repositories/MongoUserRepository'
 import { SessionManager, PasswordHandler } from '../infra/utils'
 
@@ -27,6 +28,7 @@ export function userServiceFactory(): services {
       userRepository: new MongoUserRepository(),
       sessionManager: new SessionManager(),
       passwordHandler: new PasswordHandler(),
+      refreshTokenRepository: new MongoRefreshTokenRepository(),
     }
 
     instance = {
