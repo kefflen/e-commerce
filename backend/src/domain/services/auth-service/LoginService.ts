@@ -22,7 +22,8 @@ export class LoginService extends AuthService {
       refreshToken: auth.refreshToken,
       userId: user.id,
     })
-    await this.refreshTokenRepository.createOrUpdateByUserId(user.id, refreshToken)
+
+    await this.refreshTokenRepository.createOrUpdateByUserId(refreshToken)
 
     return {
       auth,

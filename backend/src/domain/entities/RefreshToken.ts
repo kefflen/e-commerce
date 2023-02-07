@@ -1,4 +1,5 @@
 import crypto from 'node:crypto'
+import { Entity } from './Entity'
 
 export type refreshtokenDTO = {
   _id: string
@@ -13,27 +14,7 @@ export type createRefreshToken = Omit<
   '_id' | 'createdAt' | 'updatedAt'
 >
 
-export class RefreshToken {
-  private readonly props: refreshtokenDTO
-
-  constructor(refreshtokenDTO: refreshtokenDTO) {
-    this.props = structuredClone(refreshtokenDTO)
-  }
-
-  toJSON(): refreshtokenDTO {
-    return structuredClone(this.props)
-  }
-
-  update(refreshtokenDTO: Partial<refreshtokenDTO>): RefreshToken {
-    const updatedFields = Object.fromEntries(
-      Object.entries(refreshtokenDTO).filter((entry) => entry[1] !== undefined),
-    )
-
-    return new RefreshToken({
-      ...this.props,
-      ...updatedFields,
-    })
-  }
+export class RefreshToken extends Entity<refreshtokenDTO> {
 
   static create(createRefreshToken: createRefreshToken) {
     const _id = crypto.randomUUID()

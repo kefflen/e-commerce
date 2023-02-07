@@ -8,8 +8,8 @@ export class UpdateProductService extends ProductService {
 
     if (product === null) throw AppError.notFound('Product not found')
 
-    const updatedProduct = product.update(productDTO)
-    const savedProduct = await this.productRepository.update(updatedProduct)
+    product.update(productDTO)
+    const savedProduct = await this.productRepository.update(product)
 
     if (savedProduct === null) throw AppError.notFound('Product not found')
 

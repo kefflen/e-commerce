@@ -8,8 +8,8 @@ export class AddProductImageService extends ProductService {
 
     if (!product) throw AppError.notFound('Product not found')
 
-    const newProduct = product.addImage(imageFilename)
-    const updatedProduct = await this.productRepository.update(newProduct)
+    product.addImage(imageFilename)
+    const updatedProduct = await this.productRepository.update(product)
     if (!updatedProduct) throw AppError.serverError('Product not found')
 
     return updatedProduct

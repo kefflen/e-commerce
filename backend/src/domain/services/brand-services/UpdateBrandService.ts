@@ -9,8 +9,8 @@ export class UpdateBrandService extends BrandService {
     const brand = await this.brandRepository.getById(brandDTO._id)
 
     if (!brand) throw AppError.notFound('Brand not found')
-    const newBrand = brand.update(brandDTO)
-    const updatedBrand = await this.brandRepository.update(newBrand)
+    brand.update(brandDTO)
+    const updatedBrand = await this.brandRepository.update(brand)
     if (!updatedBrand)
       throw AppError.serverError('Updated brand should not be null')
 

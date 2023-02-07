@@ -4,7 +4,8 @@ import { repositoryOptions } from '../../../domain/repositories/_contracts/IRepo
 import { RefreshTokenModel } from '../models/RefreshTokenModel'
 
 export class MongoRefreshTokenRepository implements IRefreshTokenRepository {
-  async createOrUpdateByUserId(userId: string, refreshToken: RefreshToken): Promise<RefreshToken> {
+  async createOrUpdateByUserId(refreshToken: RefreshToken): Promise<RefreshToken> {
+    const { userId } = refreshToken
     const userRefreshToken = await RefreshTokenModel.findOne({ userId })
 
     if (userRefreshToken) {
@@ -17,7 +18,7 @@ export class MongoRefreshTokenRepository implements IRefreshTokenRepository {
       return new RefreshToken(result.toJSON())
     }
   }
-  
+
   async getByUserId(userId: string): Promise<RefreshToken | null> {
     const refreshTokenData = await RefreshTokenModel.findOne({ userId })
 

@@ -1,4 +1,5 @@
 import crypto from 'node:crypto'
+import { Entity } from './Entity'
 
 export type categoryDTO = {
   _id: string
@@ -12,36 +13,7 @@ export type createCategory = Omit<
   '_id' | 'createdAt' | 'updatedAt'
 >
 
-export class Category {
-  private readonly _id: string
-  private readonly _name: string
-  private readonly _createdAt: Date
-  private readonly _updatedAt: Date
-
-  constructor(categoryDTO: categoryDTO) {
-    this._id = categoryDTO._id
-    this._name = categoryDTO.name
-    this._createdAt = categoryDTO.createdAt
-    this._updatedAt = categoryDTO.updatedAt
-  }
-
-  toJSON(): categoryDTO {
-    return {
-      _id: this.id,
-      name: this.name,
-      createdAt: this.createdAt,
-      updatedAt: this.updatedAt,
-    }
-  }
-
-  update(categoryDTO: Partial<categoryDTO>): Category {
-    return new Category({
-      _id: categoryDTO._id || this.id,
-      name: categoryDTO.name || this.name,
-      createdAt: categoryDTO.createdAt || this.createdAt,
-      updatedAt: categoryDTO.updatedAt || this.updatedAt,
-    })
-  }
+export class Category extends Entity<categoryDTO> {
 
   static create(createCategory: createCategory) {
     const _id = crypto.randomUUID()
@@ -55,15 +27,15 @@ export class Category {
   }
 
   get id(): string {
-    return this._id
+    return this.props._id
   }
   get name(): string {
-    return this._name
+    return this.props.name
   }
   get createdAt(): Date {
-    return this._createdAt
+    return this.props.createdAt
   }
   get updatedAt(): Date {
-    return this._updatedAt
+    return this.props.updatedAt
   }
 }

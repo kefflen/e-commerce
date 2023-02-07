@@ -1,4 +1,5 @@
 import crypto from 'node:crypto'
+import { Entity } from './Entity'
 export enum ROLES {
   USER = 'USER',
   ADMIN = 'ADMIN',
@@ -27,111 +28,20 @@ export type createUserDTO = Omit<
 >
 
 export type loggedInUserDTO = {
-  auth:{
-    token: string,
+  auth: {
+    token: string
     refreshToken: string
   }
   user: normalizedUserDTO
 }
 
-export class User {
-  private readonly _id: string
-  private readonly _firstName: string
-  private readonly _email: string
-  private readonly _password: string
-  private readonly _lastName: string
-  private readonly _mobile: string
-  private readonly _role: ROLES
-  private readonly _isBlocked: boolean
-  private readonly _cart: string[]
-  private readonly _wishlist: string[]
-  private readonly createdAt: Date
-  private readonly updatedAt: Date
-
-  constructor(userDTO: userDTO) {
-    this._id = userDTO._id
-    this._firstName = userDTO.firstName
-    this._email = userDTO.email
-    this._password = userDTO.password
-    this._lastName = userDTO.lastName
-    this._mobile = userDTO.mobile
-    this._role = userDTO.role
-    this._isBlocked = false
-    this._cart = userDTO.cart
-    this._wishlist = userDTO.wishlist
-    this.createdAt = new Date()
-    this.updatedAt = new Date()
-  }
-  get id(): string {
-    return this._id
-  }
-  get firstName(): string {
-    return this._firstName
-  }
-  get email(): string {
-    return this._email
-  }
-  get password(): string {
-    return this._password
-  }
-  get lastName(): string {
-    return this._lastName
-  }
-  get mobile(): string {
-    return this._mobile
-  }
-  get role(): ROLES {
-    return this._role
-  }
-  get isBlocked(): boolean {
-    return this._isBlocked
-  }
-  get cart(): string[] {
-    return this._cart
-  }
-  get wishlist(): string[] {
-    return this._wishlist
-  }
-
-  toJSON(): userDTO {
-    return {
-      _id: this._id,
-      firstName: this.firstName,
-      email: this.email,
-      password: this.password,
-      lastName: this.lastName,
-      mobile: this.mobile,
-      role: this.role,
-      isBlocked: this.isBlocked,
-      cart: [...this.cart],
-      wishlist: [...this.wishlist],
-      createdAt: new Date(this.createdAt),
-      updatedAt: new Date(this.updatedAt),
-    }
-  }
+export class User extends Entity<userDTO> {
 
   toNormalizedJSON(): normalizedUserDTO {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...normalizedUserDTO } = this.toJSON()
 
-    return normalizedUserDTO
-  }
-
-  update(userDTO: Partial<userDTO>): User {
-    return new User({
-      _id: this._id,
-      firstName: userDTO.firstName || this.firstName,
-      email: userDTO.email || this.email,
-      password: userDTO.password || this.password,
-      lastName: userDTO.lastName || this.lastName,
-      mobile: userDTO.mobile || this.mobile,
-      role: userDTO.role || this.role,
-      isBlocked: userDTO.isBlocked || this.isBlocked,
-      cart: userDTO.cart || this.cart,
-      wishlist: userDTO.wishlist || this.wishlist,
-      createdAt: userDTO.createdAt || this.createdAt,
-      updatedAt: userDTO.updatedAt || this.updatedAt,
-    })
+    return structuredClone(normalizedUserDTO)
   }
 
   static create(createUserDTO: createUserDTO & { role?: ROLES }): User {
@@ -147,5 +57,42 @@ export class User {
       role: createUserDTO.role || ROLES.USER,
       ...createUserDTO,
     })
+  }
+
+  get id(): string {
+    return this.props._id
+  }
+  get firstName(): string {
+    return this.props.firstName
+  }
+  get email(): string {
+    return this.props.email
+  }
+  get password(): string {
+    return this.props.password
+  }
+  get lastName(): string {
+    return this.props.lastName
+  }
+  get mobile(): string {
+    return this.props.mobile
+  }
+  get role(): ROLES {
+    return this.props.role
+  }
+  get isBlocked(): boolean {
+    return this.props.isBlocked
+  }
+  get cart(): string[] {
+    return this.props.cart
+  }
+  get wishlist(): string[] {
+    return this.props.wishlist
+  }
+  get createdAt(): Date {
+    return this.props.createdAt
+  }
+  get updatedAt(): Date {
+    return this.props.updatedAt
   }
 }

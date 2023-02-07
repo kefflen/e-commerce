@@ -9,8 +9,8 @@ export class UpdateCategoryService extends CategoryService {
     const category = await this.categoryRepository.getById(categoryDTO._id)
 
     if (!category) throw AppError.notFound('Category not found')
-    const newCategory = category.update(categoryDTO)
-    const updatedCategory = await this.categoryRepository.update(newCategory)
+    category.update(categoryDTO)
+    const updatedCategory = await this.categoryRepository.update(category)
     if (!updatedCategory)
       throw AppError.serverError('Updated category should not be null')
 

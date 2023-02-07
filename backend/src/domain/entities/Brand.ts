@@ -1,4 +1,5 @@
 import crypto from 'node:crypto'
+import { Entity } from './Entity'
 
 export type brandDTO = {
   _id: string
@@ -12,36 +13,7 @@ export type createBrand = Omit<
   '_id' | 'createdAt' | 'updatedAt'
 >
 
-export class Brand {
-  private readonly _id: string
-  private readonly _name: string
-  private readonly _createdAt: Date
-  private readonly _updatedAt: Date
-
-  constructor(brandDTO: brandDTO) {
-    this._id = brandDTO._id
-    this._name = brandDTO.name
-    this._createdAt = brandDTO.createdAt
-    this._updatedAt = brandDTO.updatedAt
-  }
-
-  toJSON(): brandDTO {
-    return {
-      _id: this.id,
-      name: this.name,
-      createdAt: this.createdAt,
-      updatedAt: this.updatedAt,
-    }
-  }
-
-  update(brandDTO: Partial<brandDTO>): Brand {
-    return new Brand({
-      _id: brandDTO._id || this.id,
-      name: brandDTO.name || this.name,
-      createdAt: brandDTO.createdAt || this.createdAt,
-      updatedAt: brandDTO.updatedAt || this.updatedAt,
-    })
-  }
+export class Brand extends Entity<brandDTO> {
 
   static create(createBrand: createBrand) {
     const _id = crypto.randomUUID()
@@ -55,15 +27,15 @@ export class Brand {
   }
 
   get id(): string {
-    return this._id
+    return this.props._id
   }
   get name(): string {
-    return this._name
+    return this.props.name
   }
   get createdAt(): Date {
-    return this._createdAt
+    return this.props.createdAt
   }
   get updatedAt(): Date {
-    return this._updatedAt
+    return this.props.updatedAt
   }
 }

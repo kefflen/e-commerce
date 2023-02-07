@@ -1,4 +1,5 @@
 import crypto from 'crypto'
+import { Entity } from './Entity'
 
 type rating = {
   stars: number
@@ -32,35 +33,19 @@ export type updateProductDTO = Omit<
   'createdAt' | 'updatedAt' | 'slug' | 'sold' | 'ratings' | 'imagesFilename'
 >
 
-export class Product {
-  private readonly dto: productDTO
-  constructor(productDTO: productDTO) {
-    this.dto = {...productDTO}
+export class Product extends Entity<productDTO>{
+
+  addImage(imageFilename: string): void {
+    this.props.imagesFilename.push(imageFilename)
   }
 
-  toJSON(): productDTO {
-    return structuredClone(this.dto)
-  }
-
-  addImage(imageFilename: string): Product {
-    const { imagesFilename, ...rest } = this.toJSON()
-
-    return new Product({
-      ...rest,
-      imagesFilename: [...imagesFilename, imageFilename],
-    })
-  }
-
-  removeImage(imageFilename: string): Product {
-    const { imagesFilename, ...rest } = this.toJSON()
-    const newImagesFilename = imagesFilename.filter(
+  removeImage(imageFilename: string): void {
+    this.props.imagesFilename.filter(
       (path) => path !== imageFilename,
     )
-
-    return new Product({ ...rest, imagesFilename: newImagesFilename })
   }
 
-  update(productDTO: Partial<Omit<productDTO, 'slug'>>): Product {
+  update(productDTO: Partial<Omit<productDTO, 'slug'>>): void {
     let slug: string
 
     if (productDTO.title) {
@@ -69,11 +54,7 @@ export class Product {
       slug = this.slug
     }
 
-    const updateDTO = Object.fromEntries(
-      Object.entries(productDTO).filter((entry) => entry[1] !== undefined),
-    )
-
-    return new Product({ ...this.dto, ...updateDTO, slug })
+    super.update({...productDTO, slug })
   }
 
   static create(productDTO: createProductDTO): Product {
@@ -106,57 +87,57 @@ export class Product {
   }
 
   get id(): string {
-    return this.dto._id
+    return this.props._id
   }
   get title(): string {
-    return this.dto.title
+    return this.props.title
   }
 
   get slug(): string {
-    return this.dto.slug
+    return this.props.slug
   }
 
   get description(): string {
-    return this.dto.description
+    return this.props.description
   }
 
   get price(): number {
-    return this.dto.price
+    return this.props.price
   }
 
   get categoryId(): string {
-    return this.dto.categoryId
+    return this.props.categoryId
   }
 
   get brand(): string {
-    return this.dto.brand
+    return this.props.brand
   }
 
   get quantity(): number {
-    return this.dto.quantity
+    return this.props.quantity
   }
 
   get imagesFilename(): string[] {
-    return this.dto.imagesFilename
+    return this.props.imagesFilename
   }
 
   get color(): string {
-    return this.dto.color
+    return this.props.color
   }
 
   get sold(): number {
-    return this.dto.sold
+    return this.props.sold
   }
 
   get ratings(): rating[] {
-    return this.dto.ratings
+    return this.props.ratings
   }
 
   get createdAt(): Date {
-    return this.dto.createdAt
+    return this.props.createdAt
   }
 
   get updatedAt(): Date {
-    return this.dto.updatedAt
+    return this.props.updatedAt
   }
 }

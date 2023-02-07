@@ -8,7 +8,7 @@ export class BlockUserService extends UserService {
       throw new Error('User not found')
     }
 
-    const blockedUser = user.update({ isBlocked: true })
-    await this.userRepository.update(blockedUser)
+    user.update({ isBlocked: true })
+    await this.userRepository.update(user)
   }
 }

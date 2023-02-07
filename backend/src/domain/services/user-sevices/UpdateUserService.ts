@@ -4,7 +4,7 @@ import { UserService } from '../_contracts'
 
 export class UpdateUserService extends UserService {
   async execute(
-    user: Omit<
+    updateDTO: Omit<
       userDTO,
       | 'password'
       | 'wishlist'
@@ -16,21 +16,18 @@ export class UpdateUserService extends UserService {
       | 'email'
     >,
   ): Promise<normalizedUserDTO> {
-    const persistedUser = await this.userRepository.getById(user._id)
+    const user = await this.userRepository.getById(updateDTO._id)
 
-    if (!persistedUser) {
+    if (!user) {
       throw AppError.notFound('User not found')
     }
+    user.update({
+      firstName: updateDTO.firstName,
+      lastName: updateDTO.lastName,
+      mobile: updateDTO.mobile,
+    })
 
-    const updatedUser = await this.userRepository.update(
-      persistedUser.update({
-        firstName: user.firstName,
-        lastName: user.lastName,
-        mobile: user.mobile,
-        // password: user.password
-        // _id: user._id
-      }),
-    )
+    const updatedUser = await this.userRepository.update(user)
 
     if (!updatedUser) {
       throw AppError.notFound('User not found')
