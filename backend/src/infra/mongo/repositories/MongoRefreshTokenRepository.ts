@@ -2,6 +2,7 @@ import {
   RefreshToken,
   refreshtokenDTO,
 } from '../../../domain/entities/RefreshToken'
+import { AppError } from '../../../domain/errors/AppError'
 import { IRefreshTokenRepository } from '../../../domain/repositories/IRefreshTokenRepository'
 import { RefreshTokenModel } from '../models/RefreshTokenModel'
 import { MongoRepository } from './MongoRepository'
@@ -17,18 +18,10 @@ export class MongoRefreshTokenRepository
   async createOrUpdateByUserId(
     refreshToken: RefreshToken,
   ): Promise<RefreshToken> {
-    const { userId } = refreshToken
-    const userRefreshToken = await RefreshTokenModel.findOne({ userId })
+    await this.model.deleteOne({ userId: refreshToken.userId })
+    const data = await this.model.create(refreshToken.toJSON())
 
-    if (userRefreshToken) {
-      const result = await userRefreshToken.update({ refreshToken })
-
-      return new RefreshToken(result.toJSON())
-    } else {
-      const result = await RefreshTokenModel.create({ userId, refreshToken })
-
-      return new RefreshToken(result.toJSON())
-    }
+    return new this.cls(data.toObject())
   }
 
   async getByUserId(userId: string): Promise<RefreshToken | null> {

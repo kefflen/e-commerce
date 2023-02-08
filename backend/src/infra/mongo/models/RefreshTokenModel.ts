@@ -2,16 +2,16 @@ import { model, Schema } from 'mongoose'
 
 const RefreshTokenSchema = new Schema({
   _id: {
-    type: 'string',
+    type: String,
     required: true,
   },
   refreshToken: {
-    type: 'string',
+    type: String,
     unique: true,
     required: true,
   },
   userId: {
-    type: 'string',
+    type: String,
     ref: 'User',
     unique: true,
     required: true,
