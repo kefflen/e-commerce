@@ -2,7 +2,6 @@ import {
   RefreshToken,
   refreshtokenDTO,
 } from '../../../domain/entities/RefreshToken'
-import { AppError } from '../../../domain/errors/AppError'
 import { IRefreshTokenRepository } from '../../../domain/repositories/IRefreshTokenRepository'
 import { RefreshTokenModel } from '../models/RefreshTokenModel'
 import { MongoRepository } from './MongoRepository'
