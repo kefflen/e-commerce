@@ -7,6 +7,8 @@ import {
   AddProductImageService,
 } from '../domain/services/product-services'
 import { productServiceDepedencies } from '../domain/services/_contracts/ProductService'
+import { Product } from '../domain/entities/Product'
+import { ProductModel } from '../infra/mongo/models/ProductModel'
 import { MongoProductRepository } from '../infra/mongo/repositories/MongoProductRepository'
 
 type services = {
@@ -22,7 +24,7 @@ let instance: services | null = null
 
 export function productServicesFactory(): services {
   const depedencies: productServiceDepedencies = {
-    productRepository: new MongoProductRepository(),
+    productRepository: new MongoProductRepository(ProductModel, Product),
   }
 
   if (instance === null) {

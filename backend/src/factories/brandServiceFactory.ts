@@ -1,3 +1,4 @@
+import { Brand } from '../domain/entities/Brand'
 import {
   CreateBrandService,
   DeleteBrandService,
@@ -6,6 +7,7 @@ import {
   UpdateBrandService,
 } from '../domain/services/brand-services'
 import { brandServiceDepedencies } from '../domain/services/_contracts/BrandService'
+import { BrandModel } from '../infra/mongo/models/BrandModel'
 import { MongoBrandRepository } from '../infra/mongo/repositories/MongoBrandRepository'
 
 type services = {
@@ -18,7 +20,7 @@ type services = {
 
 export function brandServicesFactory(): services {
   const dependencies: brandServiceDepedencies = {
-    brandRepository: new MongoBrandRepository(),
+    brandRepository: new MongoBrandRepository(BrandModel, Brand),
   }
 
   return {

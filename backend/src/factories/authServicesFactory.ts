@@ -9,6 +9,10 @@ import { MongoUserRepository } from '../infra/mongo/repositories/MongoUserReposi
 import { SessionManager, PasswordHandler } from '../infra/utils'
 import { RedisCacheDataAccess } from '../infra/redis/RedisCacheDataAccess'
 import { MongoRefreshTokenRepository } from '../infra/mongo/repositories/MongoRefreshTokenRepository'
+import { User } from '../domain/entities/User'
+import { UserModel } from '../infra/mongo/models/UserModel'
+import { RefreshToken } from '../domain/entities/RefreshToken'
+import { RefreshTokenModel } from '../infra/mongo/models/RefreshTokenModel'
 
 type services = {
   verifyAuthTokenService: VerifyAuthTokenService
@@ -22,11 +26,14 @@ let instance: services | null = null
 export function authServicesFactory(): services {
   if (instance === null) {
     const authServicesDepedencies: authServicesDepedencies = {
-      userRepository: new MongoUserRepository(),
+      userRepository: new MongoUserRepository(UserModel, User),
+      refreshTokenRepository: new MongoRefreshTokenRepository(
+        RefreshTokenModel,
+        RefreshToken,
+      ),
       sessionManager: new SessionManager(),
       passwordHandler: new PasswordHandler(),
       cacheDataAccess: new RedisCacheDataAccess(),
-      refreshTokenRepository: new MongoRefreshTokenRepository(),
     }
 
     instance = {

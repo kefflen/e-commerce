@@ -1,3 +1,4 @@
+import { Category } from '../domain/entities/Category'
 import {
   CreateCategoryService,
   DeleteCategoryService,
@@ -6,6 +7,7 @@ import {
   UpdateCategoryService,
 } from '../domain/services/category-services'
 import { categoryServiceDepedencies } from '../domain/services/_contracts/CategoryService'
+import { CategoryModel } from '../infra/mongo/models/CategoryModel'
 import { MongoCategoryRepository } from '../infra/mongo/repositories/MongoCategoryRepository'
 
 type services = {
@@ -18,7 +20,7 @@ type services = {
 
 export function categoryServicesFactory(): services {
   const dependencies: categoryServiceDepedencies = {
-    categoryRepository: new MongoCategoryRepository(),
+    categoryRepository: new MongoCategoryRepository(CategoryModel, Category),
   }
 
   return {
