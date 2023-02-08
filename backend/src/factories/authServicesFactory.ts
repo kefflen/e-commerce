@@ -2,7 +2,7 @@ import {
   VerifyAuthTokenService,
   LoginService,
   LogoutService,
-  RefreshTokenService
+  RefreshTokenService,
 } from '../domain/services/auth-service'
 import { authServicesDepedencies } from '../domain/services/_contracts'
 import { MongoUserRepository } from '../infra/mongo/repositories/MongoUserRepository'
@@ -35,7 +35,7 @@ export function authServicesFactory(): services {
       ),
       loginService: new LoginService(authServicesDepedencies),
       logoutService: new LogoutService(authServicesDepedencies),
-      refreshTokenService: new RefreshTokenService(authServicesDepedencies)
+      refreshTokenService: new RefreshTokenService(authServicesDepedencies),
     }
   }
 

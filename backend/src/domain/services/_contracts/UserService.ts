@@ -21,6 +21,6 @@ export abstract class UserService {
     this.passwordHandler = depedencies.passwordHandler
     this.refreshTokenRepository = depedencies.refreshTokenRepository
   }
-  
+
   abstract execute(...any: unknown[]): Promise<unknown>
 }

@@ -36,7 +36,6 @@ export type loggedInUserDTO = {
 }
 
 export class User extends Entity<userDTO> {
-
   toNormalizedJSON(): normalizedUserDTO {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...normalizedUserDTO } = this.toJSON()

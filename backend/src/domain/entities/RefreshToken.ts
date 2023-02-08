@@ -15,7 +15,6 @@ export type createRefreshToken = Omit<
 >
 
 export class RefreshToken extends Entity<refreshtokenDTO> {
-
   static create(createRefreshToken: createRefreshToken) {
     const _id = crypto.randomUUID()
 

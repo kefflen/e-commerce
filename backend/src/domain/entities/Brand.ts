@@ -8,13 +8,9 @@ export type brandDTO = {
   updatedAt: Date
 }
 
-export type createBrand = Omit<
-  brandDTO,
-  '_id' | 'createdAt' | 'updatedAt'
->
+export type createBrand = Omit<brandDTO, '_id' | 'createdAt' | 'updatedAt'>
 
 export class Brand extends Entity<brandDTO> {
-
   static create(createBrand: createBrand) {
     const _id = crypto.randomUUID()
 

@@ -41,10 +41,7 @@ export const listBrandController = async (req: Request, res: Response) => {
   return res.status(200).json(categories)
 }
 
-export const getBrandByIdController = async (
-  req: Request,
-  res: Response,
-) => {
+export const getBrandByIdController = async (req: Request, res: Response) => {
   const { brandId } = req.params
 
   const brand = await getBrandService.execute(brandId)

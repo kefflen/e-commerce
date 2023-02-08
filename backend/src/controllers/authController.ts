@@ -2,7 +2,8 @@ import { Request, Response } from 'express'
 import { AppError } from '../domain/errors/AppError'
 import { authServicesFactory } from '../factories'
 
-const { loginService, logoutService, refreshTokenService } = authServicesFactory()
+const { loginService, logoutService, refreshTokenService } =
+  authServicesFactory()
 
 export const loginController = async (req: Request, res: Response) => {
   const { email, password } = req.body

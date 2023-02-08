@@ -14,7 +14,6 @@ export type createCategory = Omit<
 >
 
 export class Category extends Entity<categoryDTO> {
-
   static create(createCategory: createCategory) {
     const _id = crypto.randomUUID()
 

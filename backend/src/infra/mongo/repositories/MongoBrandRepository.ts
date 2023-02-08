@@ -22,9 +22,7 @@ export class MongoBrandRepository implements IBrandRepository {
 
     const brandsData = await query
 
-    return brandsData.map(
-      (brandData) => new Brand(brandData.toJSON()),
-    )
+    return brandsData.map((brandData) => new Brand(brandData.toJSON()))
   }
 
   async create(brand: Brand): Promise<Brand> {
@@ -35,9 +33,7 @@ export class MongoBrandRepository implements IBrandRepository {
   }
 
   async update(brand: Brand): Promise<Brand | null> {
-    const updatedBrandData = await BrandModel.findOneAndUpdate(
-      brand.toJSON(),
-    )
+    const updatedBrandData = await BrandModel.findOneAndUpdate(brand.toJSON())
 
     if (!updatedBrandData) return null
 

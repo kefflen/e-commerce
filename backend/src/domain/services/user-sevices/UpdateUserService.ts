@@ -21,6 +21,7 @@ export class UpdateUserService extends UserService {
     if (!user) {
       throw AppError.notFound('User not found')
     }
+
     user.update({
       firstName: updateDTO.firstName,
       lastName: updateDTO.lastName,

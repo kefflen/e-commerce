@@ -33,16 +33,13 @@ export type updateProductDTO = Omit<
   'createdAt' | 'updatedAt' | 'slug' | 'sold' | 'ratings' | 'imagesFilename'
 >
 
-export class Product extends Entity<productDTO>{
-
+export class Product extends Entity<productDTO> {
   addImage(imageFilename: string): void {
     this.props.imagesFilename.push(imageFilename)
   }
 
   removeImage(imageFilename: string): void {
-    this.props.imagesFilename.filter(
-      (path) => path !== imageFilename,
-    )
+    this.props.imagesFilename.filter((path) => path !== imageFilename)
   }
 
   update(productDTO: Partial<Omit<productDTO, 'slug'>>): void {
@@ -54,7 +51,7 @@ export class Product extends Entity<productDTO>{
       slug = this.slug
     }
 
-    super.update({...productDTO, slug })
+    super.update({ ...productDTO, slug })
   }
 
   static create(productDTO: createProductDTO): Product {
